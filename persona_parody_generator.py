@@ -130,7 +130,7 @@ class DeepSeekParodyGenerator:
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are a expert parody writer creating funny Persona 3 scenes. Use character tags and meme patterns from the provided data."
+                            "content": "You are a expert parody writer creating funny Persona 3 scenes. Use character tags and meme patterns from the provided data. Develop each exchange fully with detailed jokes and complete story beats."
                         },
                         {
                             "role": "user",
