@@ -1,0 +1,12 @@
+{
+    "api_key": "your-deepseek-api-key",
+    "personality_dimensions": [
+        "sarcasm",
+        "humor",
+        "seriousness",
+        "meme_tendency",
+        "pop_culture_refs",
+        "emotional_vulnerability"
+    ],
+    "rate_limit": 30  # Calls per minute
+}

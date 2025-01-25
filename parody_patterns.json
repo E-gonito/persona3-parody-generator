@@ -1,0 +1,271 @@
+{
+  "GENERAL": [
+    {
+      "pattern": "kotone|femc|spectate|popcorn",
+      "tags": [
+        "#alternate_timeline",
+        "#femc_chaos",
+        "#p3p_og",
+        "#k-drama_spectator",
+        "#protag_rivalry",
+        "#popcorn_drama"
+      ]
+    },
+    {
+      "pattern": "dark hour|tartarus|coffin",
+      "tags": ["#sleep_paralysis_gang", "#emoji_nightmare", "#coffin_tea"]
+    },
+    {
+      "pattern": "evoker|summon|gun head",
+      "tags": ["#gunhead_empty", "#teen_angst_cannon", "#persona_poggers"]
+    },
+    {
+      "pattern": "sigma male|aloof emo|harem protag",
+      "tags": ["#protag_exhaustion", "#silent_chad_energy", "#dating_sim_hell"]
+    },
+    {
+      "pattern": "genshin impact|raiden shogun|roblox",
+      "tags": ["#genshin_addiction", "#anime_waifu_obsession", "#roblox_cringe"]
+    },
+    {
+      "pattern": "online predator|pedophile|kid toucher",
+      "tags": [
+        "#internet_safety_fail",
+        "#online_predator_alert",
+        "#sees_vigilantism"
+      ]
+    }
+  ],
+  "CHARACTER_SPECIFICS": {
+    "KOTONE": [
+      {
+        "pattern": "popcorn|k-drama|spectate",
+        "tags": ["#alternate_timeline", "#femc_chaos", "#protag_rivalry"]
+      },
+      {
+        "pattern": "young boys|kennn~|shotacon",
+        "tags": [
+          "#loli_energy",
+          "#age_gap_alert",
+          "#timeline_breaker",
+          "#fbi_open_up"
+        ]
+      },
+      {
+        "pattern": "phem see|genetic disease|shadow possession",
+        "tags": [
+          "#master_manipulator",
+          "#fake_disability",
+          "#fourth_wall_gaslight"
+        ]
+      }
+    ],
+    "MAIN": [
+      {
+        "pattern": "tired|sleep|status|check my status|need sleep",
+        "tags": [
+          "#protag_exhaustion",
+          "#harem_burnout",
+          "#emoji_zzz",
+          "#social_link_overload"
+        ]
+      },
+      {
+        "pattern": "velvet room|fusion|arcana|igor|fusion excuse",
+        "tags": [
+          "#door_to_cringe",
+          "#persona_pimp",
+          "#long_nose_simp",
+          "#bullshit_mechanics",
+          "#igors_little_bitch"
+        ]
+      }
+    ],
+    "YUKARI": [
+      {
+        "pattern": "slay|bestie|bitchkari|clock",
+        "tags": [
+          "#sass_overload",
+          "#genz_queen",
+          "#tsundere_roast",
+          "#weed_sister"
+        ]
+      },
+      {
+        "pattern": "weed|blunt|netflix|cali pack|420",
+        "tags": ["#takemi_pharma", "#stoner_chill", "#smokescreen_defense"]
+      }
+    ],
+    "MITSURU": [
+      {
+        "pattern": "kirijo group|executive order|private army|kirijo special forces|sabre",
+        "tags": [
+          "#girlboss_overdrive",
+          "#corporate_terror",
+          "#nepo_rage",
+          "#crucifixion_fetish"
+        ]
+      },
+      {
+        "pattern": "cheesecake|rumors|student council",
+        "tags": ["#petty_warfare", "#rumor_victim", "#kirijo_shame"]
+      }
+    ],
+    "AIGIS": [
+      {
+        "pattern": "robot sex|systems|protocol|alexa|steamy robot sex|systems online",
+        "tags": [
+          "#deadpan_droid",
+          "#toaster_romance",
+          "#protocols_over_passions",
+          "#robot_harem",
+          "#sex_bot_quips"
+        ]
+      }
+    ],
+    "FUUKA": [
+      {
+        "pattern": "software|update|tech|malware|ye ye haircut|cooking disaster",
+        "tags": ["#discord_mod", "#system_failure", "#bug_bae", "#uwu_kitchen"]
+      }
+    ],
+    "AKIHIKO": [
+      {
+        "pattern": "protein|train|gainz|training",
+        "tags": [
+          "#gymrat_obsessed",
+          "#swol_evangelist",
+          "#brainless_gainz",
+          "#missing_brain_cells"
+        ]
+      },
+      {
+        "pattern": "homeless guy|haymaker|street cleaning",
+        "tags": [
+          "#homeless_punching_bag",
+          "#unhinged_training",
+          "#methhead_combat"
+        ]
+      }
+    ],
+    "JUNPEI": [
+      {
+        "pattern": "baby batter|15 jars|tap that 17yo",
+        "tags": [
+          "#degenerate_obsession",
+          "#coomer_energy",
+          "#chronically_horny"
+        ]
+      }
+    ],
+    "SHINJIRO": [
+      {
+        "pattern": "genshit cringepact|moral guardian",
+        "tags": ["#overprotective_dad", "#moral_panic", "#genz_culture_shock"]
+      }
+    ],
+    "KEN": [
+      {
+        "pattern": "ken2012|robux|special needs kid",
+        "tags": ["#genshin_grind", "#traumatized_child", "#digital_native_hell"]
+      }
+    ]
+  },
+  "RELATIONSHIP_DYNAMICS": [
+    {
+      "pattern": "yukari & mitsuru",
+      "tags": [
+        "#girlboss_alliance",
+        "#trauma_bonding",
+        "#weed_sisters",
+        "#reluctant_teamup"
+      ],
+      "priority": 1
+    },
+    {
+      "pattern": "fuuka & aigis|robot threesome",
+      "tags": ["#tech_disaster_duo", "#robot_harem", "#system_crash"],
+      "priority": 2
+    }
+  ],
+  "GROUP_DYNAMICS": [
+    {
+      "pattern": "polyamor|harem|threesome|harem protag|democratic vote|poly solution|harem democracy",
+      "tags": [
+        "#atlus_pandering",
+        "#dating_sim_hell",
+        "#dlc_romance",
+        "#forced_consent",
+        "#narrative_copout"
+      ]
+    },
+    {
+      "pattern": "cupcake ambush|shrine meetup|predator justice",
+      "tags": ["#vigilante_cringe", "#failed_heroism", "#team_chaos_escalation"]
+    }
+  ],
+  "RECURRING_GAGS": [
+    {
+      "pattern": "cock|dick|penis|bow target|cock target practice|dick crucifixion",
+      "tags": ["#junpei_obsession", "#edgelord_anatomy", "#bullseye_practice"]
+    },
+    {
+      "pattern": "music switch|ost change|dormcore|door sound",
+      "tags": ["#meguro_mock", "#emoji_playlist", "#audiogag_override"]
+    },
+    {
+      "pattern": "naked lovers shadow|furious gigas bulge",
+      "tags": ["#absurd_shadow_design", "#sexualized_monsters", "#atlus_wtf"]
+    },
+    {
+      "pattern": "phem see meme|car chase ost",
+      "tags": ["#meme_culture", "#audiogag_override", "#scripted_absurdity"]
+    }
+  ],
+  "GAMEPLAY_MECHANICS": [
+    {
+      "pattern": "social link|arcana|max bond",
+      "tags": ["#harem_grindset", "#romance_minmax"],
+      "priority": 1
+    }
+  ],
+  "META_HUMOR": [
+    {
+      "pattern": "persona 3 fez|directors cut",
+      "tags": ["#title_drop", "#broken_canon", "#atlus_shade"]
+    },
+    {
+      "pattern": "fourth wall|script|writers room|k-drama comparison|scripted conflict",
+      "tags": [
+        "#narrative_sabotage",
+        "#devs_apology",
+        "#voice_actor_rage",
+        "#writers_room_leak",
+        "#fourth_wall_collapse"
+      ]
+    },
+    {
+      "pattern": "worst possible alibi|scripted conflict resolution",
+      "tags": ["#lazy_writing", "#narrative_convenience", "#audience_pandering"]
+    }
+  ],
+  "CONFIG": {
+    "pattern_priority": {
+      "CHARACTER_SPECIFICS": 1,
+      "RELATIONSHIP_DYNAMICS": 2,
+      "GROUP_DYNAMICS": 2,
+      "META_HUMOR": 3,
+      "GAMEPLAY_MECHANICS": 3
+    },
+    "tag_conflict_rules": {
+      "mutually_exclusive": [
+        "#sass_overload",
+        "#uwu_kitchen",
+        "#girlboss_alliance",
+        "#weed_sisters",
+        "#moral_panic",
+        "#chronically_horny"
+      ]
+    }
+  }
+}
