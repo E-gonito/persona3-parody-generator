@@ -1,17 +1,6 @@
 {
   "GENERAL": [
     {
-      "pattern": "kotone|femc|spectate|popcorn",
-      "tags": [
-        "#alternate_timeline",
-        "#femc_chaos",
-        "#p3p_og",
-        "#k-drama_spectator",
-        "#protag_rivalry",
-        "#popcorn_drama"
-      ]
-    },
-    {
       "pattern": "dark hour|tartarus|coffin",
       "tags": ["#sleep_paralysis_gang", "#emoji_nightmare", "#coffin_tea"]
     },
