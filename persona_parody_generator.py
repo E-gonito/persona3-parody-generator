@@ -4,6 +4,8 @@ import hashlib
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from dotenv import load_dotenv
+load_dotenv()
 import os
 
 class DeepSeekParodyGenerator:
