@@ -2,7 +2,7 @@
   "GENERAL": [
     {
       "pattern": "dark hour|tartarus|coffin",
-      "tags": ["#sleep_paralysis_gang", "#emoji_nightmare", "#coffin_tea"]
+      "tags": ["#nightmare_realm", "#dungeon_crawl", "grind"]
     },
     {
       "pattern": "evoker|summon|gun head",
@@ -55,7 +55,6 @@
         "tags": [
           "#protag_exhaustion",
           "#harem_burnout",
-          "#emoji_zzz",
           "#social_link_overload"
         ]
       },
@@ -155,7 +154,7 @@
     ],
     "KEN": [
       {
-        "pattern": "ken2012|robux|special needs kid",
+        "pattern": "ken2012|robux",
         "tags": ["#genshin_grind", "#traumatized_child", "#digital_native_hell"]
       }
     ]
@@ -200,7 +199,7 @@
     },
     {
       "pattern": "music switch|ost change|dormcore|door sound",
-      "tags": ["#meguro_mock", "#emoji_playlist", "#audiogag_override"]
+      "tags": ["#meguro_mock", "#audiogag_override"]
     },
     {
       "pattern": "naked lovers shadow|furious gigas bulge",
@@ -240,11 +239,11 @@
   ],
   "CONFIG": {
     "pattern_priority": {
-      "CHARACTER_SPECIFICS": 1,
+      "CHARACTER_SPECIFICS": 2,
       "RELATIONSHIP_DYNAMICS": 2,
       "GROUP_DYNAMICS": 2,
       "META_HUMOR": 3,
-      "GAMEPLAY_MECHANICS": 3
+      "GAMEPLAY_MECHANICS": 2
     },
     "tag_conflict_rules": {
       "mutually_exclusive": [

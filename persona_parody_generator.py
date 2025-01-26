@@ -93,35 +93,30 @@ class DeepSeekParodyGenerator:
 
         return f"""Create a parody scene based on this scenario: {user_input}
 
-        {"CHARACTER INSPIRATION:" if self.pattern_strictness > 0.4 else "SUGGESTIONS:"}
-        {self._get_character_inspiration(characters) if self.pattern_strictness > 0.3 else ''}
+        Style Suggestions:
+        - Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
+        {self._get_character_inspiration(characters)}
 
-        {"REQUIRED ELEMENTS:" if self.pattern_strictness > 0.7 else "OPTIONAL IDEAS:"} 
-        {', '.join(random.sample(self.patterns['GENERAL'][0]['tags'], int(3*self.pattern_strictness)))}
+        Character Backgrounds:
+        {'\n'.join(character_profiles)}
 
-        {"EXAMPLE SCENES:" if self.use_examples else ""}
-        {self._get_style_examples() if self.use_examples else ""}
+        Story Context:
+        {context_examples if context_lines else '(No direct context found)'}
 
-        CHARACTER BACKGROUNDS:
-        {' | '.join(character_profiles)}  # More compact format
+        Guidelines:
+        1. Incorporate character quirks naturally
+        2. Blend Persona mechanics with absurd humor
+        3. Use physical comedy when appropriate
+        4. Maintain game-accurate personalities
+        5. Use dark humour if it fits the scene
 
-        RELEVANT CONTEXT:
-        {context_examples if context_lines else 'No specific context found'}
-
-        CORE GUIDELINES:
-        1. Persona game logic + absurd twist
-        2. Physical comedy where natural
-        3. Stay true to character voices
-        4. At least one meta element
-
-        FORMAT RULES:
-        - One exchange per line
-        - Actions in parentheses
-        - End with END SCENE
-        - Max 3 main exchanges
-        """
-
-# Removed duplicate sections and fixed these issues:
+        Example Scene Flow:
+        {self._get_style_examples()}
+        
+        Format:
+        [CHARACTER]: [Dialogue] [Action/expression]
+        [RESPONSE] [Reaction/ongoing joke]
+        END SCENE"""
 
     def _get_character_inspiration(self, characters):
         inspirations = []
@@ -133,9 +128,9 @@ class DeepSeekParodyGenerator:
 
     def _get_style_examples(self):
         return random.choice([
-            "AKIHIKO: (punching vending machine) 'This better drop a Muscle Drink!'",
-            "KOTONE: (checking phone) 'Sorry, my Social Link meter is flashing...'",
-            "YUKARI: (hiding blunt) 'This is... herbal medicine! For stress!'"
+            "AKIHIKO: (punching vending machine) 'This better drop a Muscle Drink! (machine falls over) Uh, I meant to do that. ' ", 
+            "KOTONE: (checking phone) 'Sorry, my Social Link meter is flashing... gotta go! (runs off) '",
+            "YUKARI: (hiding blunt) 'This is... herbal medicine! For stress! '"
         ])
 
     def _clean_response(self, text):
@@ -186,11 +181,9 @@ class DeepSeekParodyGenerator:
                             "content": prompt
                         }
                     ],
-                    "temperature": 1.25 - (self.pattern_strictness * 0.5),  # Auto-adjust based on strictness
-                    "max_tokens": 1000,
-                    "stop": ["END SCENE"],
-                    "presence_penalty": -0.5 if self.pattern_strictness > 0.7 else 0
-
+                    "temperature": 0.75,
+                    "max_tokens": 2000,
+                    "stop": ["END SCENE"]
                 },
                 timeout=30
             )
@@ -244,9 +237,12 @@ class DeepSeekParodyGenerator:
             return previous_scene
 
     def _save_parody(self, content):
-        with open('parody_archive.txt', 'a') as f:
-            f.write(f"\n\n{'='*50}\n{content}")
-        print("\nScene saved to parody_archive.txt!")
+        try:
+            with open('parody_archive.txt', 'a', encoding='utf-8') as f:
+                f.write(f"\n\n{'='*50}\n{content}")
+            print("\nScene saved successfully!")
+        except Exception as e:
+            print(f"\nFailed to save scene: {str(e)}")
 
     def interactive_mode(self):
         print("Persona 3 Parody Generator")
