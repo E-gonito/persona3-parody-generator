@@ -159,52 +159,78 @@ class DeepSeekParodyGenerator:
         character_profiles = []
         for char in characters:
             tags = self.get_character_tags(char)
-            profile = f"{char}: {', '.join(tags)}"
+            profile = "{}: {}".format(char, ', '.join(tags))
             character_profiles.append(profile)
         
         context_examples = "\n".join(context_lines[-3:]) if context_lines else "No direct context found"
 
-        return f"""Create a parody scene based on this scenario: {user_input}
+        base_prompt = """Create a parody scene based on this scenario: {input}
 
         Style Suggestions:
-        Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
-        {self._get_character_inspiration(characters)}
+        Character vibes: {vibes}
+        {inspiration}
         Tone: Satirical, absurdist, with dark or dry humor
-        Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect
-        Comedic Techniques: Use the following techniques appropriately: Exaggeration, rule of three, misdirection, ironic contrasts, incongruity, unexpected juxtaposition, deadpan delivery, sarcasm and verbal irony, callbacks, physical/slapstick humor, pun and wordplay, over/understatement, bathos, meta-humor, parody and allusion, double entendre, comedic delay, and absurd logic. Ensure each scene escalates tension and concludes with a comedic reversal or punchline.
+        Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect 
+        
+        Comedic Techniques: 
+        - Exaggeration, rule of three, misdirection 
+        - Ironic contrasts, incongruity
+        - Unexpected juxtaposition, deadpan delivery
+        - Sarcasm and verbal irony, callbacks
+        - Physical/slapstick humor
+        - Pun and wordplay
+        - Over/understatement
+        - Meta-humor, parody and allusion
+        - Double entendre, comedic delay
+        - Absurd logic
+        
+        Each scene should escalate tension and conclude with a comedic reversal or punchline.
 
         Comedic Conflict Ideas:
         - Each character has an exaggerated motivation or secret that drives them to behave absurdly.
         - Unexpected obstacles or bizarre coincidences heighten comedic tension.
         - Use comedic pacing—set up, escalate, and deliver a punchline—at least once per scene.
 
-        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour {', '.join(characters)}
+        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour {chars}
 
         Character Backgrounds:
-        {'\n'.join(character_profiles)}
+        {profiles}
 
         Story Context:
-        {context_examples if context_lines else '(No direct context found)'}
+        {context}
 
         Guidelines:
         1. Incorporate character quirks naturally
-        2. Incorporate physical and situational comedy when appropriate (pratfalls, slapstick, or comedic visual cues).
-        3. Maintain game-accurate personalities with parody freedoms (e.g., let them clash or overreact).
-        4. Use dark humor if it fits the scene, but keep the overall comedic focus.
-        5. Encourage comedic tension build-up: comedic setup → escalating absurdity → punchline.
+        2. Use physical and situational comedy when appropriate 
+        3. Maintain game-accurate personalities with parody freedoms
+        4. Use dark humor if it fits while keeping overall comedic focus
+        5. Build comedic tension: setup → escalating absurdity → punchline
+        6. Reference real-world or game elements for meta-humor
 
         Scene Flow:
-        - Setup: Introduce the location, the characters, and a minor conflict.
-        - Escalation: Characters make increasingly absurd decisions or mistakes.
-        - Climax: Tension peaks, culminating in chaos or a comedic reveal.
-        - Punchline/Resolution: A surprising twist or comedic payoff ends the scene.
+        1. Setup: Introduce location, characters, minor conflict
+        2. Escalation: Characters make increasingly absurd decisions
+        3. Climax: Tension peaks with chaos or comedic reveal
+        4. Resolution: Surprising twist or comedic payoff
 
-        Example Scene Flow:
-        {self._get_style_examples()}
+        Example Scene Structure:
+        {example}
         
-        Format:
+        Format output as:
         [CHARACTER]: [Dialogue]
         END SCENE"""
+        
+        formatted_prompt = base_prompt.format(
+            input=user_input,
+            vibes=', '.join(self.patterns['GENERAL'][0]['tags'][:3]),
+            inspiration=self._get_character_inspiration(characters),
+            chars=', '.join(characters),
+            profiles='\n'.join(character_profiles),
+            context=context_examples if context_lines else '(No direct context found)',
+            example=self._get_style_examples()
+        )
+        
+        return formatted_prompt
     def _get_character_inspiration(self, characters):
         """
         Generates inspiration suggestions for each character based on their personality tags.
@@ -316,8 +342,8 @@ class DeepSeekParodyGenerator:
                             "content": prompt
                         }
                     ],
-                    "temperature": 0.75,
-                    "max_tokens": 2000,
+                    "temperature": 1.5,
+                    "max_tokens": 5000,
                     "stop": ["END SCENE"]
                 },
                 timeout=120
@@ -354,7 +380,7 @@ class DeepSeekParodyGenerator:
                             "content": f"Original scenario: {original_input}\nCurrent scene:\n{previous_scene}\n\nRevision notes: {notes}"
                         }
                     ],
-                    "temperature": 0.6,
+                    "temperature": 1.0,
                     "max_tokens": 2000,
                     "stop": ["END SCENE"]
                 },
