@@ -1,3 +1,4 @@
+# Import required libraries
 import json
 import re
 import hashlib
@@ -6,62 +7,112 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv()  # Load environment variables from .env file
 import os
 
 class DeepSeekParodyGenerator:
     def __init__(self):
+        # Get API key from environment variables
         self.api_key = os.getenv('DEEPSEEK_API_KEY')
         if not self.api_key:
             raise ValueError("DEEPSEEK_API_KEY environment variable is not set")
+            
+        # Set up API configuration
         self.base_url = "https://api.deepseek.com/v1/chat/completions"
         self.headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}"
         }
-        self.session = self._create_session()
-        self.patterns = self.load_patterns()
-        self.full_script = self.load_script()
-        self.cache = {}
+        
+        # Initialize core components
+        self.episode_weight = 10
+        self.session = self._create_session()  # Create request session with retries
+        self.patterns = self.load_patterns()   # Load parody patterns from JSON
+        self.full_script = self.load_script()  # Load game script
+        self.cache = {}  # Cache for storing generated responses
+        # Extract valid character names from patterns
         self.valid_characters = [char.upper() for char in self.patterns['CHARACTER_SPECIFICS'].keys()]
-        self.pattern_strictness = 0.8  # 0-1 (0=ignore patterns, 1=strict adherence)
-        self.tag_weight = 1.5  # Multiplier for pattern importance
-        self.max_tags = 3  # Max tags per character
-        self.use_examples = True  # Whether 
+        
+        # Configurable parameters
+        self.pattern_strictness = 0.8  # How strictly to follow character patterns (0-1)
+        self.tag_weight = 1.5         # Multiplier for pattern importance in generation
+        self.max_tags = 3             # Maximum number of character tags to use
+        self.use_examples = True      # Whether to include example scenes
 
     def _create_session(self):
+        """
+        Creates a requests session with retry logic for API calls
+        Returns: Session object configured with retry settings
+        """
         session = requests.Session()
         retries = Retry(
-            total=5,
-            backoff_factor=1,
-            status_forcelist=[429, 500, 502, 503, 504]
+            total=5,  # Maximum number of retries
+            backoff_factor=1,  # Wait 1, 2, 4... seconds between retries
+            status_forcelist=[429, 500, 502, 503, 504]  # HTTP codes to retry on
         )
         session.mount('https://', HTTPAdapter(max_retries=retries))
         return session
 
     def load_patterns(self):
+        """
+        Loads character patterns and dialogue rules from JSON file
+        Returns: Dictionary containing parody patterns
+        """
         with open('parody_patterns.json', 'r') as f:
             return json.load(f)
 
     def load_script(self):
-        with open('optimized_persona_script.txt', 'r') as f:
-            return [line.strip() for line in f.readlines()]
+        """
+        Loads the base game script and episode4.txt for context references
+        Returns: List of combined script lines
+        """
+        combined_lines = []
+        
+        # Load main game script
+        try:
+            with open('optimized_persona_script.txt', 'r') as f:
+                combined_lines.extend(f.readlines())
+        except FileNotFoundError:
+            print("Warning: Main script file not found")
+        
+        # Load episode4 script
+        try:    
+            with open('episode4.txt', 'r') as f:
+                combined_lines.extend(f.readlines() * self.episode_weight)
+        except FileNotFoundError:
+            print("Warning: episode4.txt not found")
+        
+        return [line.strip() for line in combined_lines if line.strip()]
 
     def get_character_tags(self, character_name):
+        """
+        Gets personality tags for a given character with weighting
+        Args:
+            character_name: Name of character to get tags for
+        Returns: List of weighted personality tags
+        """
         char_patterns = self.patterns['CHARACTER_SPECIFICS'].get(character_name.upper(), [])
         all_tags = []
         for pattern_data in char_patterns:
-            # Adjustable weight calculation
+            # Calculate weight based on tag count and weight multiplier
             weight = int(len(pattern_data['tags']) * self.tag_weight) + 1
             all_tags.extend(pattern_data['tags'] * weight)
         
-        # Apply pattern strictness filter
+        # Randomly reduce tags based on strictness setting
         if self.pattern_strictness < 0.5:
             all_tags = random.sample(all_tags, int(len(all_tags)*self.pattern_strictness*2))
         
-        return list(set(all_tags))[:self.max_tags]  # Use configurable max
+        # Return unique tags up to max limit
+        return list(set(all_tags))[:self.max_tags]
 
     def find_relevant_context(self, characters, location):
+        """
+        Finds relevant script lines for given characters and location
+        Args:
+            characters: List of character names
+            location: Optional location to filter by
+        Returns: List of up to 5 relevant script lines
+        """
         context_lines = []
         character_pattern = r'^(' + '|'.join(characters) + r'):'
         
@@ -72,7 +123,7 @@ class DeepSeekParodyGenerator:
                 elif len(context_lines) < 5:
                     context_lines.append(line)
         
-        return context_lines[-5:]
+        return context_lines[-5:]  # Return last 5 relevant lines
 
     def generate_scenario_prompt(self, user_input, context_lines):
         characters = []
@@ -114,8 +165,7 @@ class DeepSeekParodyGenerator:
         {self._get_style_examples()}
         
         Format:
-        [CHARACTER]: [Dialogue] [Action/expression]
-        [RESPONSE] [Reaction/ongoing joke]
+        [CHARACTER]: [Dialogue]
         END SCENE"""
 
     def _get_character_inspiration(self, characters):
@@ -128,9 +178,50 @@ class DeepSeekParodyGenerator:
 
     def _get_style_examples(self):
         return random.choice([
-            "AKIHIKO: (punching vending machine) 'This better drop a Muscle Drink! (machine falls over) Uh, I meant to do that. ' ", 
-            "KOTONE: (checking phone) 'Sorry, my Social Link meter is flashing... gotta go! (runs off) '",
-            "YUKARI: (hiding blunt) 'This is... herbal medicine! For stress! '"
+                "[YUKARI AND MITSURU IN THE DORM],"
+                "[AKIHIKO WALKS IN],"
+                "AKIHIKO: Hey Mitsuru and Yukari... you wanna join us walking Koromaru to the shrine? Everyone else is already outside waiting."
+                "MITSURU: Oh... Thanks for the offer Akihiko, but me and Yukari will wait here for Makoto to get back home."
+                "YUKARI: Yea, we got a few things we need to discuss... so we won't be coming today."
+                "AKIHIKO: Well, good luck with whatever it is... we'll be back soon anyways. See ya."
+                "YUKARI: Yea, see ya senpai!"
+                "MITSURU: Goodbye Akihiko."
+                "[AKIHIKO LEAVES],"
+                "YUKARI: Mitsuru... let's call a truce from now on, the only person we should be against right now is not each other, but our son of a bitch leader!"
+                "MITSURU: You're right Yukari! I believe we've matured enough to know who the real perpetrator is..."
+                "YUKARI: Oh Bestie!! Slay!"
+                "MITSURU: Slay indeed.."
+                "[PAUSE WITH COCKROACH SONG PLAYING AND GETTING LOUDER],"
+                "MITSURU: You hear that?"
+                "YUKARI: That overly loud emo music? Yes, I think he's gonna come through the \"door\" any second now..."
+                "[DOOR OPENING SOUND EFFECT],"
+                "[THEY TURN AROUND],"
+                "[MAKOTO, IN FRONT OF THE DOOR BACKGROUND, LOOKS AT THEM THEN PAUSES THE MUSIC WITH A CLICK, THEN PLAYS DORM OST],"
+                "[FOOTSTEPS, LOOKING AT YUKARI AND MITSURU, THEY TURN AROUND AS FOOTSTEPS COME AND PASS THEM],"
+                "YUKARI: How did he change the music of the room like that... WAIT, What the fuck!? Makoto! Are you just gonna walk past without saying hello!?"
+                "MAKOTO: I'm tired, check my status."
+                "YUKARI: You're Tired!? How the fuck does that make it ok to not even greet us!"
+                "MITSURU: Makoto! I think we need to have a long conversation before you're even allowed to leave this fucking room!"
+                "[PAUSE],"
+                "MITSURU: Ok... Before Yukari and I bring up what we wanted to discuss... Is there anything you want to get off your chest? Considering that me and Yukari are both here in this room!?!"
+                "MAKOTO: No, not really.."
+                "YUKARI: Nothing?!"
+                "MAKOTO: Nope.."
+                "YUKARI: Ok!... Mitsuru, Before I clock this guy in the face, would you like to start the discussion?"
+                "MITSURU: Certainly Yukari... It has come to our attention that you have been engaged in an intimate relationship with both of us. Again, I want to be reasonable here and give you a chance to explain, so I'll ask you, do you have anything you want to say for yourself?!"
+                "MAKOTO: I needed to max out your arcana social links so I could fuse stronger personas."
+                "YUKARI: What thee FUCK?! Are you shitting me? What are you talking about!? Arcanas? Fusing personas? We're not in Tartarus, you dumbass!"
+                "[VELVET ROOM OST PLAYS WHILE ASCENDING IN VOLUME],"
+                "MAKOTO: Believe me... Before we go climb Tartarus, I go to a place between realms called the Velvet Room through a door only I can see. Then a man with a long nose and bulging eyes and his hot as fuck assistant takes my personas and fuses them for an even stronger one according to the depth of my relationships."
+                "YUKARI: I'm not sure if I should be pissed or worried at that explanation?! What the fuck have you been smoking before you came in the dorm because I need some of that shit right now! Weed? DMT? Fentanyl? Crack? Meth?"
+                "MITSURU: Yukari, please, I understand your frustration and not even I buy this shitty excuse of a justification, but let's hear him out one, more, time. Makoto, you're not fucking with us right now, are you? Because I'm seriously losing my patience here. Why are you going out with both me and Yukari at the same time!?"
+                "MAKOTO: There's no option for a platonic route in Persona 3 Fez."
+                "MITSURU: Ok... Yukari, he's fucking with us, get me my sabre and a cross, I'm going to crucify this son of a bitch and hang him in front of the dorm."
+                "YUKARI: What a good idea Mitsuru! I'm glad we can finally come to terms on one thing, which is making sure this motherfucker experiences the worst possible pain a human can experience!"
+                "MITSURU: Yes, as members of SEES and victims of our leader's womanizing, we need to stick together if we want to make sure that this asshole is never able to touch his cock with his hands ever again!"
+                "YUKARI: Oh, speaking of cocks, I say we take turns with my bow, taking shots and see who can hit his dick first!"
+                "MITSURU: Oh Tres Bien... Yukari, I didn't know you had that girl boss energy inside of you, I think we'll make a great team today."
+                "YUKARI: Yea, actually... I can feel a really strong bond growing between us..."
         ])
 
     def _clean_response(self, text):

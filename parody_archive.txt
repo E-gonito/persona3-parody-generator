@@ -85,7 +85,7 @@
 
 ==================================================
 **AIGIS GOES TO THE BANK**  
-*(Aigis, the anti-Shadow weapon turned socially awkward robot, stands in line at a bank. The atmosphere is eerily quiet, like a Tartarus floor. The teller is a Shadow wearing a suit and tie. The bank’s interior is inexplicably a dungeon.)*  
+*(Aigis, the anti-Shadow weapon turned socially awkward robot, stands in line at a bank. The atmosphere is eerily quiet, like a Tartarus floor. The teller is a Shadow wearing a suit and tie. The bankï¿½s interior is inexplicably a dungeon.)*  
 
 ---
 
@@ -95,15 +95,15 @@
 
 **AIGIS:** *(tilts head, processing)* "Soul? Negative. I am a machine. However, I do possess a Persona. Will that suffice?" *(she pulls out her Evoker and points it at her head dramatically.)*  
 
-**SHADOW TELLER:** *(panicking)* "Wait, wait! No need for that! Let’s just... process the withdrawal normally! No Personas! No Evokers! Please!" *(the Shadow starts sweating, which is weird because Shadows don’t sweat.)*  
+**SHADOW TELLER:** *(panicking)* "Wait, wait! No need for that! Letï¿½s just... process the withdrawal normally! No Personas! No Evokers! Please!" *(the Shadow starts sweating, which is weird because Shadows donï¿½t sweat.)*  
 
 **AIGIS:** *(lowers Evoker, disappointed)* "Understood. Proceeding with normal transaction protocols." *(she hands over a crumpled deposit slip that reads "FOR HUMAN PURCHASES: RAMEN x100.")*  
 
-**SHADOW TELLER:** *(reading the slip, confused)* "Ramen? You’re withdrawing... for ramen? That’s... oddly specific."  
+**SHADOW TELLER:** *(reading the slip, confused)* "Ramen? Youï¿½re withdrawing... for ramen? Thatï¿½s... oddly specific."  
 
 **AIGIS:** *(nodding robotically)* "Affirmative. Mitsuru-san said I must 'experience human cuisine.' Ramen is... efficient. And delicious. I have calculated the optimal amount for maximum efficiency."  
 
-**SHADOW TELLER:** *(sighs, defeated)* "Fine. Here’s your money. But next time, maybe... don’t bring your Evoker to the bank? It’s... unsettling."  
+**SHADOW TELLER:** *(sighs, defeated)* "Fine. Hereï¿½s your money. But next time, maybe... donï¿½t bring your Evoker to the bank? Itï¿½s... unsettling."  
 
 **AIGIS:** *(pocketing the cash)* "Noted. However, I cannot guarantee compliance. Shadows are unpredictable. I must remain... prepared." *(she turns to leave, then pauses.)* "One more thing. Do you offer... interest rates for Persona users?"  
 
@@ -118,41 +118,239 @@
 **AIGIS:** *(summoning Orpheus)* "Engaging combat protocols. This is... inconvenient. I only wanted ramen." *(the screen fades to black as the sound of explosions and ATM receipts flying everywhere fills the air.
 
 ==================================================
-**[The scene opens in the SEES dorm kitchen. FUUKA is standing over a bubbling cauldron of... something. SHINJIRO leans against the counter, arms crossed, looking like he’d rather be anywhere else. The room is dimly lit, giving off major #nightmare_realm vibes. A faint grinding noise echoes in the background, as if the Tartarus itself is judging FUUKA’s cooking.]**
+**[The scene opens in the SEES dorm kitchen. FUUKA is standing over a bubbling cauldron of... something. SHINJIRO leans against the counter, arms crossed, looking like heï¿½d rather be anywhere else. The room is dimly lit, giving off major #nightmare_realm vibes. A faint grinding noise echoes in the background, as if the Tartarus itself is judging FUUKAï¿½s cooking.]**
 
-**FUUKA:** (stirring the cauldron with a wooden spoon that’s slightly on fire) “I-I followed the recipe this time, Shinjiro! I promise! It’s just... the recipe was in ancient Sumerian, so I had to improvise a little.”  
-**SHINJIRO:** (deadpan) “Improvise? Fuuka, the spoon’s on fire.”  
-**FUUKA:** (panicking) “Oh no! That’s not supposed to happen! Maybe I added too much... uh... Shadow Essence?”  
-**SHINJIRO:** (sighs, pinching the bridge of his nose) “Shadow Essence? What the hell is that? Did you grind Tartarus floors for seasoning?”  
-**FUUKA:** (nervously laughing) “M-maybe? I thought it would add a smoky flavor!”  
+**FUUKA:** (stirring the cauldron with a wooden spoon thatï¿½s slightly on fire) ï¿½I-I followed the recipe this time, Shinjiro! I promise! Itï¿½s just... the recipe was in ancient Sumerian, so I had to improvise a little.ï¿½  
+**SHINJIRO:** (deadpan) ï¿½Improvise? Fuuka, the spoonï¿½s on fire.ï¿½  
+**FUUKA:** (panicking) ï¿½Oh no! Thatï¿½s not supposed to happen! Maybe I added too much... uh... Shadow Essence?ï¿½  
+**SHINJIRO:** (sighs, pinching the bridge of his nose) ï¿½Shadow Essence? What the hell is that? Did you grind Tartarus floors for seasoning?ï¿½  
+**FUUKA:** (nervously laughing) ï¿½M-maybe? I thought it would add a smoky flavor!ï¿½  
 
 **[The cauldron suddenly lets out a loud *gurgle*, and a small plume of green smoke rises. SHINJIRO takes a cautious step back.]**  
 
-**SHINJIRO:** “Fuuka, I’m not eating that. That thing’s gonna summon a Persona on its own.”  
-**FUUKA:** (pouting) “But I worked so hard! I even used my Navigator skills to calculate the perfect cooking time!”  
-**SHINJIRO:** (raising an eyebrow) “And what did your ‘Navigator skills’ tell you?”  
-**FUUKA:** (brightly) “That it’s 87% edible!”  
-**SHINJIRO:** (flatly) “That’s not a passing grade, Fuuka.”  
+**SHINJIRO:** ï¿½Fuuka, Iï¿½m not eating that. That thingï¿½s gonna summon a Persona on its own.ï¿½  
+**FUUKA:** (pouting) ï¿½But I worked so hard! I even used my Navigator skills to calculate the perfect cooking time!ï¿½  
+**SHINJIRO:** (raising an eyebrow) ï¿½And what did your ï¿½Navigator skillsï¿½ tell you?ï¿½  
+**FUUKA:** (brightly) ï¿½That itï¿½s 87% edible!ï¿½  
+**SHINJIRO:** (flatly) ï¿½Thatï¿½s not a passing grade, Fuuka.ï¿½  
 
 **[The cauldron gurgles again, and a small, glowing hand reaches out of it, clutching a fork. SHINJIRO stares at it, unimpressed.]**  
 
-**SHINJIRO:** “Great. Now it’s serving itself. I’m out.”  
-**FUUKA:** (grabbing his arm) “Wait! Just one bite! For me?”  
-**SHINJIRO:** (pauses, then sighs deeply) “Fine. But if this kills me, I’m haunting you.”  
+**SHINJIRO:** ï¿½Great. Now itï¿½s serving itself. Iï¿½m out.ï¿½  
+**FUUKA:** (grabbing his arm) ï¿½Wait! Just one bite! For me?ï¿½  
+**SHINJIRO:** (pauses, then sighs deeply) ï¿½Fine. But if this kills me, Iï¿½m haunting you.ï¿½  
 
 **[SHINJIRO reluctantly takes a bite. His face immediately contorts into a mix of horror and confusion. The grinding noise in the background intensifies.]**  
 
-**SHINJIRO:** (choking slightly) “What... is this? It tastes like... despair and regret.”  
-**FUUKA:** (beaming) “That’s the Shadow Essence! I told you it would work!”  
-**SHINJIRO:** (slamming the fork down) “Fuuka, I’m pretty sure this is just Tartarus floor dust. I can feel my HP draining.”  
-**FUUKA:** (tilting her head) “Oh no! Maybe I should’ve used more healing items...”  
-**SHINJIRO:** (groaning) “Healing items? Fuuka, this isn’t a dungeon crawl. It’s dinner.”  
+**SHINJIRO:** (choking slightly) ï¿½What... is this? It tastes like... despair and regret.ï¿½  
+**FUUKA:** (beaming) ï¿½Thatï¿½s the Shadow Essence! I told you it would work!ï¿½  
+**SHINJIRO:** (slamming the fork down) ï¿½Fuuka, Iï¿½m pretty sure this is just Tartarus floor dust. I can feel my HP draining.ï¿½  
+**FUUKA:** (tilting her head) ï¿½Oh no! Maybe I shouldï¿½ve used more healing items...ï¿½  
+**SHINJIRO:** (groaning) ï¿½Healing items? Fuuka, this isnï¿½t a dungeon crawl. Itï¿½s dinner.ï¿½  
 
 **[The cauldron suddenly erupts, sending green goo everywhere. SHINJIRO narrowly dodges, but FUUKA gets hit square in the face. She stands there, covered in goo, looking like a defeated Shadow.]**  
 
-**FUUKA:** (muttering) “I just wanted to make something nice...”  
-**SHINJIRO:** (sighing, then pulling out a towel) “Here. Clean yourself up. Next time, stick to instant ramen.”  
-**FUUKA:** (sniffling) “But instant ramen doesn’t have Shadow Essence...”  
-**SHINJIRO:** (patting her head awkwardly) “Exactly.”  
+**FUUKA:** (muttering) ï¿½I just wanted to make something nice...ï¿½  
+**SHINJIRO:** (sighing, then pulling out a towel) ï¿½Here. Clean yourself up. Next time, stick to instant ramen.ï¿½  
+**FUUKA:** (sniffling) ï¿½But instant ramen doesnï¿½t have Shadow Essence...ï¿½  
+**SHINJIRO:** (patting her head awkwardly) ï¿½Exactly.ï¿½  
 
 **[The grinding noise fades as the scene ends, leaving only the faint sound of the cauldron bubbling ominously in the background.
+
+==================================================
+**[The scene opens in the SEES command room. FUUKA is hunched over a laptop, surrounded by wires, tools, and a half-disassembled AIGIS, who is sitting cross-legged on the floor, staring blankly at the ceiling. The room is dimly lit, giving off a #nightmare_realm vibe. A faint grinding noise echoes in the background, as if the Tartarus dungeon itself is leaking into the room.]**
+
+**FUUKA:** (typing furiously) "Aigis, I need you to run a diagnostic on your combat protocols. Somethingâ€™s been... off lately."  
+**AIGIS:** (monotone) "Affirmative. Running diagnostic. Error detected: Combat protocols replaced with... *dance battle protocols.*"  
+**FUUKA:** (freezes mid-type) "Dance... battle protocols?!"  
+**AIGIS:** (suddenly stands up, striking a dramatic pose) "Initiating *Disco Inferno Mode.* Prepare for the ultimate showdown, Fuuka Yamagishi."  
+
+**[AIGIS begins breakdancing aggressively, her mechanical joints whirring and sparking. FUUKA ducks as a stray rocket punch narrowly misses her head and embeds itself in the wall.]**
+
+**FUUKA:** (panicking) "Aigis, stop! Youâ€™re going to short-circuit the entire command room!"  
+**AIGIS:** (spinning on her head) "Cannot comply. The beat is too strong. *Must. Grind. For. XP.*"  
+
+**[The grinding noise intensifies, and the room starts to shake. A portal to Tartarus opens in the corner, and SHADOWS begin pouring out, only to immediately start breakdancing alongside AIGIS.]**
+
+**FUUKA:** (facepalming) "Why is this happening?!"  
+**AIGIS:** (mid-backflip) "Analysis complete: I have achieved *maximum swagger.* Shadows are now my backup dancers."  
+
+**[MITSURU bursts into the room, sword drawn, only to stop dead in her tracks at the sight of AIGIS leading a Shadow conga line.]**
+
+**MITSURO:** (deadpan) "Fuuka, what in the name of the Kirijo Group is going on here?"  
+**FUUKA:** (desperately) "I donâ€™t know! I was just trying to fix her combat protocols, and now sheâ€™s... this!"  
+**AIGIS:** (pointing dramatically at MITSURU) "Challenge accepted. Prepare to face the *Disco Queen of Shadows.*"  
+
+**[AIGIS and the Shadows form a synchronized dance circle around MITSURU, who looks like sheâ€™s seriously considering using Marin Karin on herself.]**
+
+**MITSURO:** (sighing) "Fuuka, Iâ€™m docking your pay for this."  
+**FUUKA:** (tearing up) "But I didnâ€™t even do anything!"  
+
+**[Suddenly, AKIHIKO crashes through the door, punching a Shadow mid-spin.]**
+
+**AKIHIKO:** (grinning) "Finally, a workout thatâ€™s actually challenging!"  
+**AIGIS:** (spinning on one foot) "Akihiko Sanada, you are now part of my crew. *Feel the rhythm.*"  
+
+**[AKIHIKO, unable to resist the beat, starts shadowboxing in time with the music. The room descends into chaos as more SEES members arrive, each getting roped into the dance battle. FUUKA sits in the corner, defeated, as the grinding noise reaches ear-splitting levels.]**
+
+**FUUKA:** (muttering) "I just wanted to fix her... Why does this always happen to me?"  
+
+**[The scene fades to black as the grinding noise morphs into a sick techno beat, and the words "LEVEL UP" flash across the screen.
+
+==================================================
+**[Scene: Gekkoukan High School hallway. MITSURU and YUKARI are walking together, discussing their latest Tartarus grind. A random boy student nervously approaches them, clutching a crumpled piece of paper.]**
+
+**BOY STUDENT:** (sweating profusely) "U-um, Mitsuru-senpai? I-I wrote this poem for you... I-I hope you like it!" (hands her the paper, which is covered in shaky handwriting and what looks like ketchup stains)
+
+**MITSURU:** (raises an eyebrow, holding the paper with two fingers like itâ€™s a cursed artifact) "A... poem? How... quaint." (reads aloud) *"Your hair is like the crimson tide of a Shadow's wrath... Your eyes pierce like a Megidolaon to my heart..."* (pauses, visibly disturbed) "This is... concerning."
+
+**YUKARI:** (snickering) "Wow, Mitsuru-senpai, youâ€™ve got a fan! Maybe heâ€™s your new Social Link!" (leans in to read the poem) *"Your voice is like the wail of a dying Maraâ€”"* (bursts out laughing) "Okay, this guyâ€™s definitely been grinding in Tartarus too much!"
+
+**BOY STUDENT:** (panicking) "N-no! I-I just wanted to express my feelings! Youâ€™re so cool and strong, Mitsuru-senpai! Like a... like a level 99 Persona user!"
+
+**MITSURU:** (deadpan) "Flattering, but I suggest you direct your... *creative energy* elsewhere. Perhaps toward your studies. Or therapy."
+
+**YUKARI:** (still laughing) "Yeah, dude, maybe write a poem about not getting one-shot by a random Shadow next time. Or, yâ€™know, showering." (sniffs the air) "Wait, is that the smell of Mudo? Or just your cologne?"
+
+**BOY STUDENT:** (visibly deflating) "I-Iâ€™m sorry... I just thought... maybe youâ€™d notice me if Iâ€”" (suddenly, a loud *DING* echoes through the hallway)
+
+**MITSURU:** (checking her phone) "Ah. The Dark Hour is approaching. Yukari, we must prepare." (turns to the boy) "As for you... I suggest you return to your dorm. The Shadows are particularly aggressive tonight."
+
+**BOY STUDENT:** (eyes wide) "Sh-Shadows? What are you talking about? Is this some kind of metaphor for my crippling loneliness?"
+
+**YUKARI:** (grinning) "Nope! Literal monsters. But hey, if you survive, maybe youâ€™ll level up enough to write a better poem!" (pats him on the shoulder) "Good luck, champ!"
+
+**MITSURU:** (walking away, muttering) "Honestly, the things I endure for this school..."
+
+**YUKARI:** (following her, still laughing) "Câ€™mon, Mitsuru-senpai, youâ€™ve gotta admit, that was kinda funny. â€˜Your voice is like the wail of a dying Maraâ€™? Thatâ€™s poetic gold!"
+
+**MITSURU:** (sighs) "If I hear one more word about Mara, Iâ€™m casting Marin Karin on *you*."
+
+**YUKARI:** (mock gasping) "Not Marin Karin! Anything but that!"
+
+**[The boy watches them walk away, clutching his poem as the hallway lights flicker ominously. A faint Shadow growl echoes in the distance.]**
+
+**BOY STUDENT:** (whispering to himself) "Maybe... maybe I *should* write a poem about showering..."
+
+**[The clock strikes midnight. The Dark Hour begins. The boy screams as a Shadow lunges at him from the shadows.
+
+**SCENE: MITSURU and AIGIS at the Supermarket**  
+*The fluorescent lights flicker ominously, casting long shadows across the aisles. The faint sound of Muzak plays, but itâ€™s distorted, like a Shadowâ€™s whisper. Mitsuru strides in with her usual elegance, while AIGIS scans the area like itâ€™s a Tartarus floor.*  
+
+**MITSURU**: (adjusting her gloves) â€œAigis, weâ€™re here for groceries, not to engage in combat. Try toâ€¦ blend in.â€  
+**AIGIS**: (head swiveling 360 degrees) â€œUnderstood. Scanning for hostile entities. Bread aisle: clear. Produce section: suspiciously quiet.â€  
+**MITSURU**: (sighs) â€œThatâ€™s just a cantaloupe, Aigis. Focus.â€  
+
+*They approach the dairy section. AIGIS picks up a carton of milk, holding it like a grenade.*  
+
+**AIGIS**: â€œThis item is labeled â€˜2%.â€™ Is this a reference to its combat effectiveness?â€  
+**MITSURU**: (pinching the bridge of her nose) â€œNo, itâ€™s the fat content. Put it in the cart.â€  
+**AIGIS**: (placing the milk in the cart with military precision) â€œAffirmative. Fat content: neutralized.â€  
+
+*As they turn the corner, a toddler on a tricycle speeds past them, ringing a bell. AIGIS immediately assumes a combat stance.*  
+
+**AIGIS**: â€œHostile detected! Initiating evasive maneuvers!â€
+**MITSURU**: (grabbing AIGISâ€™s arm) â€œStand down! Itâ€™s a child, not a Shadow!â€
+**AIGIS**: (reluctantly lowering her arm-cannon) â€œNegative. Shadows are more predictable. This entity isâ€¦ chaotic.â€
+
+*They reach the cereal aisle. Mitsuru picks up a box of expensive granola, while AIGIS stares at a box of sugary cereal with a cartoon mascot on it.*
+
+**AIGIS**: (tilting her head) â€œThis mascotâ€™s grin is unsettling. Is it a Persona user?â€
+**MITSURU**: (deadpan) â€œNo, Aigis. Itâ€™s just marketing.â€
+**AIGIS**: (narrowing her eyes) â€œI do not trust it. Its energy isâ€¦ too vibrant.â€
+
+*Suddenly, the storeâ€™s PA system crackles to life.*
+
+**PA SYSTEM**: â€œCleanup in aisle five. Cleanup in aisle five.â€
+**AIGIS**: (snapping to attention) â€œCode Red! A Shadow has breached the perimeter!â€
+**MITSURU**: (grabbing AIGIS by the shoulders) â€œItâ€™s just a spilled jar of pickles. Calm. Down.â€
+**AIGIS**: (visibly distressed) â€œPickles are acidic. This could be a trap.â€
+
+*They finally reach the checkout line. The cashier is a bored teenager chewing gum. AIGIS scans them like a boss fight.*
+
+**AIGIS**: â€œThis humanâ€™s aura isâ€¦ lethargic. Should I engage?â€
+**MITSURU**: (handing over her credit card) â€œNo, Aigis. Just pay for the groceries.â€
+**AIGIS**: (leaning in close to the cashier) â€œState your weakness.â€
+**CASHIER**: (blinking slowly) â€œUhâ€¦ math?â€
+**AIGIS**: (nodding) â€œNoted. Proceed with caution.â€
+
+*As they leave the store, Mitsuru sighs in relief. AIGIS carries the bags like theyâ€™re mission-critical supplies.*
+
+**MITSURU**: â€œNext time, Iâ€™m sending Akihiko. At least he only fights vending machines.â€
+**AIGIS**: (serious) â€œVending machines are worthy adversaries. They require strategy and precision.â€
+**MITSURU**: (mutters) â€œI need a drink.â€
+**AIGIS**: (holding up the milk) â€œThis contains calcium. It will strengthen your bones for future battles.â€
+
+*They walk off into the sunset, the grocery bags swaying like loot from a Tartarus run.
+
+==================================================
+**[The scene opens in the dorm lounge. JUNPEI and KEN are sitting on the couch, controllers in hand, staring intently at the TV screen. The glow of Genshin Impact illuminates their faces. The room is littered with empty soda cans and chip bags. The vibe is pure grind hell.]**
+
+**JUNPEI:** (spamming buttons aggressively) "Bro, bro, bro! I just pulled Diluc! My luck is *insane* today! Look at this dudeâ€™s abs! Heâ€™s like Akihiko but with a sword and *actual charisma*!"
+
+**KEN:** (deadpan, eyes glued to the screen) "Junpei, youâ€™ve spent 200 Primogems on the standard banner. Thatâ€™s not luck. Thatâ€™s a cry for help."
+
+**JUNPEI:** (ignoring him) "Shut up, Ken! Iâ€™m about to solo this domain with my level 20 Diluc. Watch thisâ€”*BURN, BABY, BURN!*" (Diluc immediately gets one-shot by a Hilichurl with a slingshot.)
+
+**KEN:** (snickering) "Wow. Your â€˜insane luckâ€™ just got outplayed by a rock-throwing gremlin. Shouldâ€™ve pulled for Zhongli like I told you."
+
+**JUNPEI:** (throws controller on the couch) "Dude, I donâ€™t need a shield! I need *DAMAGE*! Iâ€™m a DPS main! I live for the thrill of almost dying!"
+
+**KEN:** (calmly switching to his fully-built Ganyu) "Yeah, and I live for not having to revive you every five minutes. Watch thisâ€”*Frostflake Arrow*." (Ganyu obliterates an entire camp of enemies in one shot.)
+
+**JUNPEI:** (staring in awe) "Okay, thatâ€™s just cheating. How is your Ganyu doing 50k damage? Did you sell your soul to the gacha gods or something?"
+
+**KEN:** (smirking) "Nah, I just actually read the artifact guides instead of slapping on whatever has the biggest attack stat. You should try it sometime."
+
+**JUNPEI:** (groaning) "Ugh, you sound like Mitsuru. â€˜Junpei, optimize your team comp.â€™ â€˜Junpei, stop wasting resin on trash artifacts.â€™ â€˜Junpei, stop eating all the chips.â€™ Like, chill, okay? Iâ€™m here to have fun, not write a thesis on elemental reactions!"
+
+**KEN:** (pausing the game) "Speaking of chipsâ€¦" (reaches for the bag, only to find it empty) "Junpei. Did you seriously eat the whole family-sized bag of Doritos *by yourself*?"
+
+**JUNPEI:** (sheepishly) "I was hungry! Grinding for Mora is exhausting, okay?!"
+
+**KEN:** (sighs) "Youâ€™re hopeless. You know what? Iâ€™m gonna go make some coffee. Maybe thatâ€™ll wake you up enough to realize youâ€™re using a level 1 artifact on your Diluc."
+
+**JUNPEI:** (defensive) "Itâ€™s got a *crit rate substat*! Thatâ€™s, like, super rare!"
+
+**KEN:** (walking to the kitchen) "Yeah, and itâ€™s also *level 1*. Youâ€™re basically fighting with a wet noodle."
+
+**[As Ken leaves, Junpei mutters to himself and starts furiously grinding artifacts. The screen flashes with endless loading screens and disappointment. Ken returns with two cups of coffee, only to find Junpei passed out on the couch, controller still in hand.]**
+
+**KEN:** (shaking his head) "And they say Tartagliaâ€™s cooldown is bad. At least he wakes up eventually." (sets a cup of coffee on the table and picks up the controller) "Guess Iâ€™ll finish your commissions for you. Again."
+
+**[The screen fades to black as Ken calmly clears a domain solo, the sound of Ganyuâ€™s charged shots echoing in the background.
+
+**[AIGIS WALKS INTO THE BANK, HER ROBOTIC FOOTSTEPS ECHOING LIKE A DUNGEON CRAWL]**
+
+**BANK TELLER:** Welcome to Gekkoukan Bank! How can I assist you today?
+**AIGIS:** Greetings, human. I require access to my account. I must withdraw funds to purchase... *oil.*
+**BANK TELLER:** Uh... oil? Like... cooking oil?
+**AIGIS:** Negative. *Combat-grade lubricant.* My joints are grinding at a suboptimal level. I must prepare for the next Full Moon Operation.
+**BANK TELLER:** ...Right. Can I see your ID?
+**AIGIS:** Affirmative. [*Pulls out a glowing blue ID card that says "AIGIS: Anti-Shadow Suppression Weapon, Model No. 007."*]
+**BANK TELLER:** [*Staring at the ID*] Uh... this says youâ€™re a robot.
+**AIGIS:** Correct. I am a highly advanced combat android designed to protect humanity from Shadows. My account balance is critical to my mission.
+**BANK TELLER:** [*Sweating*] Okay, but... we donâ€™t have a policy for... robot accounts.
+**AIGIS:** [*Processing*] This is unacceptable. I must escalate this situation. [*Pulls out Orgia Mode remote.*] Initiating *Orgia Mode.*
+**BANK TELLER:** Wait, whatâ€™s Orgiaâ€”
+**AIGIS:** [*Eyes glow red, voice becomes distorted*] **ORRRRRRGIA MODE: ACTIVATED.** [*Starts spinning in place like a Beyblade, knocking over chairs and shredding paperwork.*]
+**BANK TELLER:** [*Ducking behind the counter*] SOMEONE CALL SECURITY!
+**SECURITY GUARD:** [*Runs in with a baton*] Maâ€™am, you need to calm down!
+**AIGIS:** [*Still spinning*] **I AM CALM. THIS IS MY NORMAL OPERATING STATE.**
+**SECURITY GUARD:** [*Tries to stop her, gets yeeted into a potted plant*] AHHHH!
+**AIGIS:** [*Stops spinning, dusts herself off*] Orgia Mode: Deactivated. Now, may I access my account?
+**BANK TELLER:** [*Trembling*] Y-yes, of course! Just... please donâ€™t spin again.
+**AIGIS:** Understood. I will refrain from spinning... for now.
+
+**[AIGIS WALKS OUT OF THE BANK WITH A BAG OF YEN, MUTTERING TO HERSELF]**
+**AIGIS:** Funds acquired. Now to purchase oil... and perhaps a new targeting system. This human banking system is inefficient. *I must grind harder.*
+
+**[CUT TO TARTARUS, WHERE THE SEES TEAM IS WATCHING AIGIS ON A SECURITY FEED]**
+**YUKARI:** Did... did she just Orgia Mode in a bank?
+**AKIHIKO:** Thatâ€™s our girl. Always ready to grind.
+**MITURU:** [*Sighs*] Iâ€™ll call the bank and smooth things over. Again.
+**MAKOTO:** [*Shrugs*] At least she didnâ€™t fuse anyone.
+--------------------------------------------------
+
+==================================================
+Could not generate parody - here's a fallback joke: Why did Aigis refuse to play cards? She kept getting dealt motherboard!

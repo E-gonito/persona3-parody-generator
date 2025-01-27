@@ -95,6 +95,6 @@ def main(input_file, output_file):
     print(f"Script cleaned and saved to {output_file}")
 
 if __name__ == "__main__":
-    input_file = "episode_4.txt"
-    output_file = "cleaned_persona3_script.txt"
+    input_file = "episode4.txt"
+    output_file = "cleaned_episode4.txt"
     main(input_file, output_file)
