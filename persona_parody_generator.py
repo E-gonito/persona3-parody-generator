@@ -164,8 +164,12 @@ class DeepSeekParodyGenerator:
         return f"""Create a parody scene, using similar humour seen in South Park, based on this scenario: {user_input}
 
         Style Suggestions:
-        - Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
+        Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
         {self._get_character_inspiration(characters)}
+        Tone: Satirical, absurdist, with dark or dry humor
+        Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect
+        Character Quirks: Use their unique traits (e.g., one is overly enthusiastic, another is lazy)
+         Focus on comedic interactions, exaggerated reactions, and punchlines.
 
         Tags: Comedy, Adventure, Parody, Satire {', '.join(characters)}
 
@@ -181,6 +185,7 @@ class DeepSeekParodyGenerator:
         3. Maintain game-accurate personalities
         4. Use dark humour if it fits the scene
         5. Blend Persona mechanics with absurd humor
+        6. Focus on comedic interactions, exaggerated reactions, and punchlines.
 
         Example Scene Flow:
         {self._get_style_examples()}
@@ -367,7 +372,26 @@ class DeepSeekParodyGenerator:
         print(f"Available characters: {', '.join(self.valid_characters)}\n")
         
         while True:
-            user_input = input("\nEnter scenario (e.g. 'YUKARI and AKIHIKO gym mishap') or 'exit': ")
+            print("\nScenario Details:")
+            
+            print("\nSetting: Your choice (e.g., Dorm, Tartarus, School, Mall)")
+            setting = input("Setting: ")
+            
+            print("\nAvailable characters:", ', '.join(self.valid_characters))
+            characters = input("Characters (separated by commas): ")
+            
+            print("\nBrief context to ground the scene:")
+            context = input("Context: ")
+            
+            user_input = {
+                'setting': setting,
+                'characters': characters,
+                'context': context
+            }
+
+            user_input = f"{characters} in {setting}: {context}"
+            if user_input.lower() == 'exit':
+                break
             if user_input.lower() == 'exit':
                 break
                 
