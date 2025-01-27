@@ -34,8 +34,8 @@ class DeepSeekParodyGenerator:
         self.valid_characters = [char.upper() for char in self.patterns['CHARACTER_SPECIFICS'].keys()]
         
         # Configurable parameters
-        self.pattern_strictness = 0.8  # How strictly to follow character patterns (0-1)
-        self.tag_weight = 1.5         # Multiplier for pattern importance in generation
+        self.pattern_strictness = 0.6  # How strictly to follow character patterns (0-1)
+        self.tag_weight = 1         # Multiplier for pattern importance in generation
         self.max_tags = 3             # Maximum number of character tags to use
         self.use_examples = True      # Whether to include example scenes
 
@@ -104,35 +104,54 @@ class DeepSeekParodyGenerator:
         
         # Return unique tags up to max limit
         return list(set(all_tags))[:self.max_tags]
-
-    def find_relevant_context(self, characters, location):
+    def find_relevant_context(self, characters):
         """
-        Finds relevant script lines for given characters and location
+        Finds relevant script lines for given characters
         Args:
-            characters: List of character names
-            location: Optional location to filter by
+             characters: List of character names
         Returns: List of up to 5 relevant script lines
         """
         context_lines = []
         character_pattern = r'^(' + '|'.join(characters) + r'):'
-        
+            
         for line in self.full_script:
             if re.search(character_pattern, line, re.IGNORECASE):
-                if location and location.lower() in line.lower():
+                if len(context_lines) < 5:
                     context_lines.append(line)
-                elif len(context_lines) < 5:
-                    context_lines.append(line)
-        
+            
         return context_lines[-5:]  # Return last 5 relevant lines
 
     def generate_scenario_prompt(self, user_input, context_lines):
+        """
+        Generates a structured prompt for creating a Persona 3 parody scene based on user input.
+        This function takes user input and context lines to create a detailed prompt that helps
+        generate a parody scene in the style of Persona 3. It extracts character names,
+        locations, and combines them with predefined character traits and story context.
+        Parameters:
+        ----------
+        user_input : str
+            The user's input text containing character names and scenario details
+        context_lines : list
+            List of previous story lines for maintaining continuity (optional)
+        Returns:
+        -------
+        str
+            A formatted prompt string containing scene guidelines, character profiles,
+            and story context for generating a Persona 3 parody scene
+        Example:
+        -------
+        >>> generator.generate_scenario_prompt("JUNPEI and YUKARI in the Dorm", ["Previous scene..."])
+        # Returns formatted prompt with character details and scene guidelines
+        Notes:
+        -----
+        - Characters must be capitalized in the input to be recognized
+        - Incorporates predefined character tags and personality traits
+        - Maintains game-accurate characterization while allowing for parody elements
+        """
         characters = []
         for word in re.findall(r'\b([A-Z][a-z]+)\b', user_input):
             if word.upper() in self.valid_characters:
                 characters.append(word.upper())
-        
-        location_match = re.search(r'in the (\w+)', user_input)
-        location = location_match.group(1) if location_match else ""
 
         character_profiles = []
         for char in characters:
@@ -142,11 +161,13 @@ class DeepSeekParodyGenerator:
         
         context_examples = "\n".join(context_lines[-3:]) if context_lines else "No direct context found"
 
-        return f"""Create a parody scene based on this scenario: {user_input}
+        return f"""Create a parody scene, using similar humour seen in South Park, based on this scenario: {user_input}
 
         Style Suggestions:
         - Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
         {self._get_character_inspiration(characters)}
+
+        Tags: Comedy, Adventure, Parody, Satire {', '.join(characters)}
 
         Character Backgrounds:
         {'\n'.join(character_profiles)}
@@ -156,10 +177,10 @@ class DeepSeekParodyGenerator:
 
         Guidelines:
         1. Incorporate character quirks naturally
-        2. Blend Persona mechanics with absurd humor
-        3. Use physical comedy when appropriate
-        4. Maintain game-accurate personalities
-        5. Use dark humour if it fits the scene
+        2. Use physical comedy when appropriate
+        3. Maintain game-accurate personalities
+        4. Use dark humour if it fits the scene
+        5. Blend Persona mechanics with absurd humor
 
         Example Scene Flow:
         {self._get_style_examples()}
@@ -167,11 +188,19 @@ class DeepSeekParodyGenerator:
         Format:
         [CHARACTER]: [Dialogue]
         END SCENE"""
-
     def _get_character_inspiration(self, characters):
+        """
+        Generates inspiration suggestions for each character based on their personality tags.
+            
+        Args:
+            characters: List of character names to generate inspiration for
+                
+        Returns:
+        String containing inspiration suggestions, one line per character
+            """
         inspirations = []
         for char in characters:
-            tags = self.get_character_tags(char)[:2]
+            tags = self.get_character_tags(char)[:2]  # Get up to 2 tags per character
             if tags:
                 inspirations.append(f"- {char}: Might reference {random.choice(['concepts like', 'things such as'])} {', '.join(tags)}")
         return '\n'.join(inspirations)
@@ -245,10 +274,8 @@ class DeepSeekParodyGenerator:
         for word in re.findall(r'\b([A-Z][a-z]+)\b', user_input):
             if word.upper() in self.valid_characters:
                 characters.append(word.upper())
-        
-        location = re.search(r'in the (\w+)', user_input)
-        location = location.group(1) if location else ""
-        context_lines = self.find_relevant_context(characters, location)
+
+        context_lines = self.find_relevant_context(characters)
         
         prompt = self.generate_scenario_prompt(user_input, context_lines)
         
@@ -265,7 +292,7 @@ class DeepSeekParodyGenerator:
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are a expert parody writer creating funny Persona 3 scenes. Use character tags and meme patterns naturally."
+                            "content": "You are a expert parody writer creating funny scenes with Characters from Persona 3. Use character tags and meme patterns naturally."
                         },
                         {
                             "role": "user",
@@ -311,7 +338,7 @@ class DeepSeekParodyGenerator:
                         }
                     ],
                     "temperature": 0.6,
-                    "max_tokens": 1000,
+                    "max_tokens": 2000,
                     "stop": ["END SCENE"]
                 },
                 timeout=30
@@ -340,7 +367,7 @@ class DeepSeekParodyGenerator:
         print(f"Available characters: {', '.join(self.valid_characters)}\n")
         
         while True:
-            user_input = input("\nEnter scenario (e.g. 'Yukari and Akihiko gym mishap') or 'exit': ")
+            user_input = input("\nEnter scenario (e.g. 'YUKARI and AKIHIKO gym mishap') or 'exit': ")
             if user_input.lower() == 'exit':
                 break
                 
@@ -360,7 +387,7 @@ class DeepSeekParodyGenerator:
                 choice = input("Choose action (R/N/S): ").lower()
                 
                 if choice in ['r', '1']:
-                    notes = input("Refinement notes (e.g. 'More Akihiko protein jokes'): ")
+                    notes = input("Refinement notes (e.g. 'More AKIHIKO protein jokes'): ")
                     revised = self._generate_refinement(original_prompt, current_scene, notes)
                     if revised != current_scene:
                         current_scene = revised
