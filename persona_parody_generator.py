@@ -9,6 +9,8 @@ from urllib3.util.retry import Retry
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 import os
+import sys
+import time
 
 class DeepSeekParodyGenerator:
     def __init__(self):
@@ -24,8 +26,14 @@ class DeepSeekParodyGenerator:
             "Authorization": f"Bearer {self.api_key}"
         }
         
-        # Initialize core components
+        # Configurable parameters
         self.episode_weight = 10
+        self.pattern_strictness = 0.6  # How strictly to follow character patterns (0-1)
+        self.tag_weight = 1         # Multiplier for pattern importance in generation
+        self.max_tags = 3             # Maximum number of character tags to use
+        self.use_examples = True      # Whether to include example scenes
+
+        # Initialize core components
         self.session = self._create_session()  # Create request session with retries
         self.patterns = self.load_patterns()   # Load parody patterns from JSON
         self.full_script = self.load_script()  # Load game script
@@ -33,11 +41,6 @@ class DeepSeekParodyGenerator:
         # Extract valid character names from patterns
         self.valid_characters = [char.upper() for char in self.patterns['CHARACTER_SPECIFICS'].keys()]
         
-        # Configurable parameters
-        self.pattern_strictness = 0.6  # How strictly to follow character patterns (0-1)
-        self.tag_weight = 1         # Multiplier for pattern importance in generation
-        self.max_tags = 3             # Maximum number of character tags to use
-        self.use_examples = True      # Whether to include example scenes
 
     def _create_session(self):
         """
@@ -108,7 +111,7 @@ class DeepSeekParodyGenerator:
         """
         Finds relevant script lines for given characters
         Args:
-             characters: List of character names
+        characters: List of character names
         Returns: List of up to 5 relevant script lines
         """
         context_lines = []
@@ -161,17 +164,21 @@ class DeepSeekParodyGenerator:
         
         context_examples = "\n".join(context_lines[-3:]) if context_lines else "No direct context found"
 
-        return f"""Create a parody scene, using similar humour seen in South Park, based on this scenario: {user_input}
+        return f"""Create a parody scene based on this scenario: {user_input}
 
         Style Suggestions:
         Character vibes: {', '.join(self.patterns['GENERAL'][0]['tags'][:3])}
         {self._get_character_inspiration(characters)}
         Tone: Satirical, absurdist, with dark or dry humor
         Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect
-        Character Quirks: Use their unique traits (e.g., one is overly enthusiastic, another is lazy)
-         Focus on comedic interactions, exaggerated reactions, and punchlines.
+        Comedic Techniques: Use the following techniques appropriately: Exaggeration, rule of three, misdirection, ironic contrasts, incongruity, unexpected juxtaposition, deadpan delivery, sarcasm and verbal irony, callbacks, physical/slapstick humor, pun and wordplay, over/understatement, bathos, meta-humor, parody and allusion, double entendre, comedic delay, and absurd logic. Ensure each scene escalates tension and concludes with a comedic reversal or punchline.
 
-        Tags: Comedy, Adventure, Parody, Satire {', '.join(characters)}
+        Comedic Conflict Ideas:
+        - Each character has an exaggerated motivation or secret that drives them to behave absurdly.
+        - Unexpected obstacles or bizarre coincidences heighten comedic tension.
+        - Use comedic pacing—set up, escalate, and deliver a punchline—at least once per scene.
+
+        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour {', '.join(characters)}
 
         Character Backgrounds:
         {'\n'.join(character_profiles)}
@@ -181,11 +188,16 @@ class DeepSeekParodyGenerator:
 
         Guidelines:
         1. Incorporate character quirks naturally
-        2. Use physical comedy when appropriate
-        3. Maintain game-accurate personalities
-        4. Use dark humour if it fits the scene
-        5. Blend Persona mechanics with absurd humor
-        6. Focus on comedic interactions, exaggerated reactions, and punchlines.
+        2. Incorporate physical and situational comedy when appropriate (pratfalls, slapstick, or comedic visual cues).
+        3. Maintain game-accurate personalities with parody freedoms (e.g., let them clash or overreact).
+        4. Use dark humor if it fits the scene, but keep the overall comedic focus.
+        5. Encourage comedic tension build-up: comedic setup → escalating absurdity → punchline.
+
+        Scene Flow:
+        - Setup: Introduce the location, the characters, and a minor conflict.
+        - Escalation: Characters make increasingly absurd decisions or mistakes.
+        - Climax: Tension peaks, culminating in chaos or a comedic reveal.
+        - Punchline/Resolution: A surprising twist or comedic payoff ends the scene.
 
         Example Scene Flow:
         {self._get_style_examples()}
@@ -308,7 +320,7 @@ class DeepSeekParodyGenerator:
                     "max_tokens": 2000,
                     "stop": ["END SCENE"]
                 },
-                timeout=30
+                timeout=120
             )
             response.raise_for_status()
             
@@ -346,7 +358,7 @@ class DeepSeekParodyGenerator:
                     "max_tokens": 2000,
                     "stop": ["END SCENE"]
                 },
-                timeout=30
+                timeout=120
             )
             response.raise_for_status()
             
@@ -368,30 +380,35 @@ class DeepSeekParodyGenerator:
             print(f"\nFailed to save scene: {str(e)}")
 
     def interactive_mode(self):
+        def loading_animation(text):
+            animation = "|/-\\"
+            idx = 0
+            while True:
+                print(f"\r{text} {animation[idx % len(animation)]}", end="")
+                idx += 1
+                sys.stdout.flush()
+                time.sleep(0.1)
+                yield
+
         print("Persona 3 Parody Generator")
         print(f"Available characters: {', '.join(self.valid_characters)}\n")
         
         while True:
             print("\nScenario Details:")
-            
             print("\nSetting: Your choice (e.g., Dorm, Tartarus, School, Mall)")
-            setting = input("Setting: ")
+            setting = input("Setting: ").strip()
             
             print("\nAvailable characters:", ', '.join(self.valid_characters))
-            characters = input("Characters (separated by commas): ")
+            characters = input("Characters (separated by commas): ").strip()
+            
+            loading = loading_animation("Processing")
+            next(loading)
             
             print("\nBrief context to ground the scene:")
-            context = input("Context: ")
-            
-            user_input = {
-                'setting': setting,
-                'characters': characters,
-                'context': context
-            }
+            context = input("Context: ").strip()
+            next(loading)
 
             user_input = f"{characters} in {setting}: {context}"
-            if user_input.lower() == 'exit':
-                break
             if user_input.lower() == 'exit':
                 break
                 
