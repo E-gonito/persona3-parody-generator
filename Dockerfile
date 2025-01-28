@@ -1,35 +1,32 @@
 FROM ubuntu:22.04
 
-# Set global environment variables
-ENV DEBIAN_FRONTEND=noninteractive \
-    TZ=Etc/UTC \
-    APP_ENV=production \
-    DEBUG_MODE=0
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 
-WORKDIR /usr/src
+# Create separate directories
+WORKDIR /app
 
-# Install dependencies as root
+# Install dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     expect \
-    tzdata && \
+    tzdata \
+    dos2unix && \
     pip3 install requests python-dotenv
 
-# Create user and set permissions BEFORE switching
+# Create user and set permissions
 RUN useradd --create-home appuser && \
-    mkdir -p /usr/src && \
-    chown -R appuser:appuser /usr/src
+    chown -R appuser:appuser /app
 
-# Copy files while still root
-COPY . . 
+# Copy all files
+COPY . .
 
-# Set permissions while still root
-RUN chmod +x docker-entrypoint.sh
+# Fix Windows line endings and permissions
+RUN dos2unix /app/docker-entrypoint.sh && \
+    chmod +x /app/docker-entrypoint.sh
 
-# Switch to appuser
 USER appuser
 
-# Final command
-ENTRYPOINT ["/usr/src/docker-entrypoint.sh"] 
+ENTRYPOINT ["/app/docker-entrypoint.sh"]

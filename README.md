@@ -59,12 +59,18 @@ self.use_examples = True
 
 ```bash
 # Build Docker image
-docker build . -t persona-parody-gen
+docker build -t persona-parody-gen .
 
-# Run container
+# Run container (Linux/MacOS)
 docker run -it \
   --env-file .env \
-  -v "$(pwd)/output:/usr/src" \
+  -v "${PWD}\output:/app/output"\
+  persona-parody-gen
+
+# (Windows)
+docker run -it `
+  --env-file .env `
+  -v "${PWD}\output:/app/output" `
   persona-parody-gen
 
 # Run script

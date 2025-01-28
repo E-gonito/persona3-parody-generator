@@ -397,7 +397,8 @@ class DeepSeekParodyGenerator:
 
     def _save_parody(self, content):
         try:
-            with open('parody_archive.txt', 'a', encoding='utf-8') as f:
+            # Save to mounted output directory
+            with open('/app/output/parody_archive.txt', 'a', encoding='utf-8') as f:
                 f.write(f"\n\n{'='*50}\n{content}")
             print("\nScene saved successfully!")
         except Exception as e:
