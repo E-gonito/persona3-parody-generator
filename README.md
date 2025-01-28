@@ -1,6 +1,6 @@
-# PERSONA 3 PARODY GENERATOR CUSTOMIZATION GUIDE
+# PERSONA 3 PARODY GENERATOR
 
-A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses DeepSeek API for content generation.
+A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses DeepSeek API for content generation. Contained with Docker
 
 ## Prerequisites
 
