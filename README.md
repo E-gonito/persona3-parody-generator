@@ -98,9 +98,4 @@ Enter context: Studying for exams
 Choose action (R/N/E):
 ````
 
-The results will be saved to `parody_archive.txt`, to copy over-
-
-```bash
-# Copy results from container
-docker cp <container-name>:/app/parody_archive.txt ./output/
-```
+The results will be saved to the output folder

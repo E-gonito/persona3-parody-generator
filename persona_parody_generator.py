@@ -189,7 +189,7 @@ class DeepSeekParodyGenerator:
         - Unexpected obstacles or bizarre coincidences heighten comedic tension.
         - Use comedic pacing—set up, escalate, and deliver a punchline—at least once per scene.
 
-        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour {chars}
+        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour 
 
         Character Backgrounds:
         {profiles}
