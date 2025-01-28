@@ -1,2 +1,3 @@
 .env
 parody_archive.txt
+secrets.env

@@ -341,7 +341,7 @@ class DeepSeekParodyGenerator:
                         }
                     ],
                     "temperature": 1.5,
-                    "max_tokens": 5000,
+                    "max_tokens": 4096,
                     "stop": ["END SCENE"]
                 },
                 timeout=120
