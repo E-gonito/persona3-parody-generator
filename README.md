@@ -4,8 +4,7 @@ A parody script generator for Persona 3 Parodies (specifically in the style of M
 
 ## Prerequisites
 
-- Docker installed on your system
-- Docker Compose (recommended)
+- Docker [https://github.com/docker]
 
 ## Local Environment Setup
 
