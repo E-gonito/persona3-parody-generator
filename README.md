@@ -63,13 +63,13 @@ docker build -t persona-parody-gen .
 
 # Run container (Linux/MacOS)
 docker run -it \
-  --env-file .env \
+  --env-file secrets.env \
   -v "${PWD}\output:/app/output"\
   persona-parody-gen
 
 # (Windows)
 docker run -it `
-  --env-file .env `
+  --env-file secrets.env `
   -v "${PWD}\output:/app/output" `
   persona-parody-gen
 
@@ -77,27 +77,30 @@ docker run -it `
 python3 persona_parody_generator.py
 ```
 
-```
+````
 
 ## Usage Example
 
-```
+```bash
+# Interactive prompt example
+Enter setting (e.g., Dorm, Tartarus, School, Mall): Dorm
+Enter characters (comma-separated): YUKARI,JUNPEI
+Enter context: Studying for exams
 
-Enter setting (e.g., Dorm, Tartarus, School, Mall):
-Dorm
-Enter characters (comma-separated):
-YUKARI,JUNPEI
-Enter context:
-Studying for exams
-
+# Example output
 [RETURNED SCRIPT]
 
+# Available actions
 1. [R]efine scene
 2. [N]ew scenario
 3. [E]xit
-   Choose action (R/N/E):
 
-```
+Choose action (R/N/E):
+````
 
-The results will be saved to parody_archive.txt
+The results will be saved to `parody_archive.txt`, to copy over-
+
+```bash
+# Copy results from container
+docker cp <container-name>:/app/parody_archive.txt ./output/
 ```
