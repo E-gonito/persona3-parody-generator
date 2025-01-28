@@ -1,28 +1,68 @@
-=== PERSONA 3 PARODY GENERATOR CUSTOMIZATION GUIDE ===
-A parody script generator for Persona 3 Parodies (Specifically in the style of MasterDank47) built with python. Using API calls to DeepSeek.
+# PERSONA 3 PARODY GENERATOR CUSTOMIZATION GUIDE
 
-[API SETTINGS]
-File: persona_parody_generator.py
-Location: generate_parody_scenario() method
+A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses DeepSeek API for content generation.
 
-Adjust these values:
+## Prerequisites
 
-Example Configurations:
+- Docker installed on your system
+- Docker Compose (recommended)
 
-Strict Pattern Adherence
-self.pattern_strictness = 0.9
-self.tag_weight = 2.0
-self.max_tags = 4
-self.use_examples = True
+## Local Environment Setup
 
-Creative Mode
-self.pattern_strictness = 0.3  
+1. Create a `.env` file in the root directory
+2. Add your DeepSeek API key:
+
+```
+DEEPSEEK_API_KEY=your_api_key_here
+```
+
+## API Settings
+
+**File:** `persona_parody_generator.py`  
+**Location:** `def __init__(self):`
+
+```python
+self.api_key = os.getenv('DEEPSEEK_API_KEY')  # Replace with your API key (Never hardcode)
+```
+
+## Configuration Examples
+
+### Strict Adherence
+
+```python
+# Configurable parameters
+self.pattern_strictness = 0.9  # Range: 0.0 (creative) to 1.0 (strict)
+self.tag_weight = 2.0         # Range: 0.1 to 3.0
+self.max_tags = 4            # Range: 1 to 5
+self.use_examples = True     # Options: True/False
+```
+
+````
+
+### Creative Mode
+
+```python
+self.pattern_strictness = 0.3
 self.tag_weight = 1.2
 self.max_tags = 2
 self.use_examples = False
+````
 
-Balanced Default
+### Balanced Default
+
+```python
 self.pattern_strictness = 0.7
-self.tag_weight = 1.5  
+self.tag_weight = 1.5
 self.max_tags = 3
 self.use_examples = True
+```
+
+## Quick Start With Docker
+
+```bash
+# Build Docker image
+docker build . -t persona-parody-gen
+
+# Run container
+docker run -it --env-file .env persona-parody-gen
+```
