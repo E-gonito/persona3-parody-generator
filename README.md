@@ -64,5 +64,30 @@ self.use_examples = True
 docker build . -t persona-parody-gen
 
 # Run container
-docker run -it --env-file .env persona-parody-gen
+docker run -it \
+  --env-file .env \
+  -v "$(pwd)/output:/usr/src" \
+  persona-parody-gen
 ```
+
+Then run python3 persona_parody_generator.py
+
+## Usage Example
+
+```
+Enter setting (e.g., Dorm, Tartarus, School, Mall):
+Dorm
+Enter characters (comma-separated):
+YUKARI,JUNPEI
+Enter context:
+Studying for exams
+
+[RETURNED SCRIPT]
+
+1. [R]efine scene
+2. [N]ew scenario
+3. [E]xit
+Choose action (R/N/E):
+```
+
+The results will be saved to parody_archive.txt

@@ -9,8 +9,6 @@ from urllib3.util.retry import Retry
 from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 import os
-import sys
-import time
 
 class DeepSeekParodyGenerator:
     def __init__(self):
@@ -116,14 +114,14 @@ class DeepSeekParodyGenerator:
         """
         context_lines = []
         character_pattern = r'^(' + '|'.join(characters) + r'):'
-            
+        
         for line in self.full_script:
             if re.search(character_pattern, line, re.IGNORECASE):
                 if len(context_lines) < 5:
                     context_lines.append(line)
             
         return context_lines[-5:]  # Return last 5 relevant lines
-
+ 
     def generate_scenario_prompt(self, user_input, context_lines):
         """
         Generates a structured prompt for creating a Persona 3 parody scene based on user input.
@@ -406,15 +404,6 @@ class DeepSeekParodyGenerator:
             print(f"\nFailed to save scene: {str(e)}")
 
     def interactive_mode(self):
-        def loading_animation(text):
-            animation = "|/-\\"
-            idx = 0
-            while True:
-                print(f"\r{text} {animation[idx % len(animation)]}", end="")
-                idx += 1
-                sys.stdout.flush()
-                time.sleep(0.1)
-                yield
 
         print("Persona 3 Parody Generator")
         print(f"Available characters: {', '.join(self.valid_characters)}\n")
@@ -427,12 +416,8 @@ class DeepSeekParodyGenerator:
             print("\nAvailable characters:", ', '.join(self.valid_characters))
             characters = input("Characters (separated by commas): ").strip()
             
-            loading = loading_animation("Processing")
-            next(loading)
-            
             print("\nBrief context to ground the scene:")
             context = input("Context: ").strip()
-            next(loading)
 
             user_input = f"{characters} in {setting}: {context}"
             if user_input.lower() == 'exit':
@@ -444,27 +429,31 @@ class DeepSeekParodyGenerator:
             while True:
                 if current_scene is None:
                     current_scene = self.generate_parody_scenario(original_prompt)
+                    # Save immediately after generation
+                    self._save_parody(current_scene)
+                    
                 print("\n" + "-"*50)
                 print(current_scene)
                 print("-"*50)
                 
                 print("\n1. [R]efine scene")
                 print("2. [N]ew scenario")
-                print("3. [S]ave & exit")
-                choice = input("Choose action (R/N/S): ").lower()
+                print("3. [E]xit")
+                choice = input("Choose action (R/N/E): ").lower()
                 
                 if choice in ['r', '1']:
                     notes = input("Refinement notes (e.g. 'More AKIHIKO protein jokes'): ")
                     revised = self._generate_refinement(original_prompt, current_scene, notes)
                     if revised != current_scene:
                         current_scene = revised
+                        # Save after refinement
+                        self._save_parody(current_scene)
                         print("\nRevised scene:")
                     else:
                         print("\nUsing previous version due to error")
                 elif choice in ['n', '2']:
                     break
-                elif choice in ['s', '3']:
-                    self._save_parody(current_scene)
+                elif choice in ['e', '3']:
                     return
                 else:
                     print("Invalid choice, starting new scenario...")
