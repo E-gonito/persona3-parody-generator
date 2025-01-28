@@ -37,8 +37,6 @@ self.max_tags = 4            # Range: 1 to 5
 self.use_examples = True     # Options: True/False
 ```
 
-````
-
 ### Creative Mode
 
 ```python
@@ -46,7 +44,7 @@ self.pattern_strictness = 0.3
 self.tag_weight = 1.2
 self.max_tags = 2
 self.use_examples = False
-````
+```
 
 ### Balanced Default
 
@@ -68,13 +66,17 @@ docker run -it \
   --env-file .env \
   -v "$(pwd)/output:/usr/src" \
   persona-parody-gen
+
+# Run script
+python3 persona_parody_generator.py
 ```
 
-Then run python3 persona_parody_generator.py
+```
 
 ## Usage Example
 
 ```
+
 Enter setting (e.g., Dorm, Tartarus, School, Mall):
 Dorm
 Enter characters (comma-separated):
@@ -87,7 +89,9 @@ Studying for exams
 1. [R]efine scene
 2. [N]ew scenario
 3. [E]xit
-Choose action (R/N/E):
+   Choose action (R/N/E):
+
 ```
 
 The results will be saved to parody_archive.txt
+```
