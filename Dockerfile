@@ -14,14 +14,15 @@ RUN apt-get update && \
     expect \
     tzdata \
     dos2unix && \
-    pip3 install requests python-dotenv
+    pip3 install requests python-dotenv anthropic
 
 # Create user and set permissions
 RUN useradd --create-home appuser && \
     chown -R appuser:appuser /app
 
 # Copy all files
-COPY . .
+COPY data/ /app/data/
+COPY docker-entrypoint.sh persona_parody_generator.py secrets.env /app/
 
 # Fix Windows line endings and permissions
 RUN dos2unix /app/docker-entrypoint.sh && \

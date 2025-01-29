@@ -1,35 +1,37 @@
 # Import required libraries
-import json
+from dotenv import load_dotenv
+import os
 import re
+import json
 import hashlib
 import random
+import anthropic  # Use the anthropic library
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from dotenv import load_dotenv
-load_dotenv()  # Load environment variables from .env file
-import os
 
-class DeepSeekParodyGenerator:
+# Load environment variables from secrets.env
+load_dotenv('secrets.env')  # Specify the path to your custom env file
+
+# Retrieve the API key from environment variables
+api_key = os.getenv('ANTHROPIC_API_KEY')
+if not api_key:
+    raise ValueError("ANTHROPIC_API_KEY environment variable is not set")
+
+class Persona3ParodyGenerator:
     def __init__(self):
-        # Get API key from environment variables
-        self.api_key = os.getenv('DEEPSEEK_API_KEY')
-        if not self.api_key:
-            raise ValueError("DEEPSEEK_API_KEY environment variable is not set")
-            
-        # Set up API configuration
-        self.base_url = "https://api.deepseek.com/v1/chat/completions"
-        self.headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.api_key}"
-        }
+        self.api_key = api_key  # Use the loaded API key
+        # Set up API client using the anthropic library
+        self.client = anthropic.Anthropic(
+            api_key=self.api_key  # Now self.api_key is defined
+        )
         
         # Configurable parameters
         self.episode_weight = 10
         self.pattern_strictness = 0.6  # How strictly to follow character patterns (0-1)
-        self.tag_weight = 1         # Multiplier for pattern importance in generation
-        self.max_tags = 3             # Maximum number of character tags to use
-        self.use_examples = True      # Whether to include example scenes
+        self.tag_weight = 1             # Multiplier for pattern importance in generation
+        self.max_tags = 3               # Maximum number of character tags to use
+        self.use_examples = True        # Whether to include example scenes
 
         # Initialize core components
         self.session = self._create_session()  # Create request session with retries
@@ -37,9 +39,8 @@ class DeepSeekParodyGenerator:
         self.full_script = self.load_script()  # Load game script
         self.cache = {}  # Cache for storing generated responses
         # Extract valid character names from patterns
-        self.valid_characters = [char.upper() for char in self.patterns['CHARACTER_SPECIFICS'].keys()]
-        
-
+        self.valid_characters = [char.upper() for char in self.patterns.get('CHARACTER_SPECIFICS', {}).keys()]
+    
     def _create_session(self):
         """
         Creates a requests session with retry logic for API calls
@@ -59,29 +60,33 @@ class DeepSeekParodyGenerator:
         Loads character patterns and dialogue rules from JSON file
         Returns: Dictionary containing parody patterns
         """
-        with open('parody_patterns.json', 'r') as f:
-            return json.load(f)
+        try:
+            with open('./data/parody_patterns.json', 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print("Error: 'parody_patterns.json' not found.")
+            return {}
 
     def load_script(self):
         """
-        Loads the base game script and episode4.txt for context references
+        Loads the base game script and persona_3_parody_scripts.txt for context references
         Returns: List of combined script lines
         """
         combined_lines = []
         
         # Load main game script
         try:
-            with open('optimized_persona_script.txt', 'r') as f:
+            with open('./data/optimized_persona_3_script.txt', 'r') as f:
                 combined_lines.extend(f.readlines())
         except FileNotFoundError:
-            print("Warning: Main script file not found")
+            print("Warning: 'optimized_persona_3_script.txt' not found.")
         
-        # Load episode4 script
+        # Load persona_3_parody_scripts.txt for additional context 
         try:    
-            with open('episode4.txt', 'r') as f:
+            with open('./data/persona_3_parody_scripts.txt', 'r') as f:
                 combined_lines.extend(f.readlines() * self.episode_weight)
         except FileNotFoundError:
-            print("Warning: episode4.txt not found")
+            print("Warning: './data/persona_3_parody_scripts.txt' not found.")
         
         return [line.strip() for line in combined_lines if line.strip()]
 
@@ -92,7 +97,7 @@ class DeepSeekParodyGenerator:
             character_name: Name of character to get tags for
         Returns: List of weighted personality tags
         """
-        char_patterns = self.patterns['CHARACTER_SPECIFICS'].get(character_name.upper(), [])
+        char_patterns = self.patterns.get('CHARACTER_SPECIFICS', {}).get(character_name.upper(), [])
         all_tags = []
         for pattern_data in char_patterns:
             # Calculate weight based on tag count and weight multiplier
@@ -105,11 +110,12 @@ class DeepSeekParodyGenerator:
         
         # Return unique tags up to max limit
         return list(set(all_tags))[:self.max_tags]
+
     def find_relevant_context(self, characters):
         """
         Finds relevant script lines for given characters
         Args:
-        characters: List of character names
+            characters: List of character names
         Returns: List of up to 5 relevant script lines
         """
         context_lines = []
@@ -119,9 +125,9 @@ class DeepSeekParodyGenerator:
             if re.search(character_pattern, line, re.IGNORECASE):
                 if len(context_lines) < 5:
                     context_lines.append(line)
-            
+        
         return context_lines[-5:]  # Return last 5 relevant lines
- 
+
     def generate_scenario_prompt(self, user_input, context_lines):
         """
         Generates a structured prompt for creating a Persona 3 parody scene based on user input.
@@ -162,62 +168,67 @@ class DeepSeekParodyGenerator:
         
         context_examples = "\n".join(context_lines[-3:]) if context_lines else "No direct context found"
 
-        base_prompt = """Create a parody scene based on this scenario: {input}
+        base_prompt = """Create a highly detailed and elaborate parody scene based on this scenario: {input}
+    
+    Style Suggestions:
+    Character vibes: {vibes}
+    {inspiration}
+    Tone: Satirical, absurdist, with dark or dry humor
+    Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect 
 
-        Style Suggestions:
-        Character vibes: {vibes}
-        {inspiration}
-        Tone: Satirical, absurdist, with dark or dry humor
-        Humor Style: South Park-style - irreverent, exaggerated, and often politically incorrect 
-        
-        Comedic Techniques: 
-        - Exaggeration, rule of three, misdirection 
-        - Ironic contrasts, incongruity
-        - Unexpected juxtaposition, deadpan delivery
-        - Sarcasm and verbal irony, callbacks
-        - Physical/slapstick humor
-        - Pun and wordplay
-        - Over/understatement
-        - Meta-humor, parody and allusion
-        - Double entendre, comedic delay
-        - Absurd logic
-        
-        Each scene should escalate tension and conclude with a comedic reversal or punchline.
+    Instructions for Extended Lines:
+    - Dialogue Lines: Each dialogue line should be comprehensive, including detailed expressions, emotions, and actions. Avoid brevity; instead, focus on fleshing out character personalities through their speech.
+    - Scene Descriptions: Elaborate on the setting and character movements. Use vivid imagery to paint a clear picture of the environment and actions.
+    - Character Actions: Incorporate detailed actions and reactions that reflect the characters' emotions and intentions.
+    
+    Comedic Techniques: 
+    - Exaggeration, rule of three, misdirection 
+    - Ironic contrasts, incongruity
+    - Unexpected juxtaposition, deadpan delivery
+    - Sarcasm and verbal irony, callbacks
+    - Physical/slapstick humor
+    - Pun and wordplay
+    - Over/understatement
+    - Meta-humor, parody and allusion
+    - Double entendre, comedic delay
+    - Absurd logic
+    
+    Each scene should escalate tension and conclude with a comedic reversal or punchline. Each line should be detailed, but not overly verbose.
+    
+    Comedic Conflict Ideas:
+    - Each character has an exaggerated motivation or secret that drives them to behave absurdly.
+    - Unexpected obstacles or bizarre coincidences heighten comedic tension.
+    - Use comedic pacing—set up, escalate, and deliver a punchline—at least once per scene.
+    
+    Tags: Comedy, Adventure, Parody, Satire, Surreal Humour, Persona 3
+    
+    Character Backgrounds:
+    {profiles}
+    
+    Story Context:
+    {context}
+    
+    Guidelines:
+    1. Incorporate character quirks naturally
+    2. Use physical and situational comedy when appropriate 
+    3. Maintain game-accurate personalities with parody freedoms
+    4. Use dark humor if it fits while keeping overall comedic focus
+    5. Build comedic tension: setup → escalating absurdity → punchline
+    6. Reference real-world or game elements for meta-humor
+    
+    Scene Flow:
+    1. Setup: Introduce location, characters, minor conflict
+    2. Escalation: Characters make increasingly absurd decisions
+    3. Climax: Tension peaks with chaos or comedic reveal
+    4. Resolution: Surprising twist or comedic payoff
+    
+    Example Scene Structure:
+    {example}
+    
+    Format output as:
+    [CHARACTER]: [Dialogue]
+    END SCENE"""
 
-        Comedic Conflict Ideas:
-        - Each character has an exaggerated motivation or secret that drives them to behave absurdly.
-        - Unexpected obstacles or bizarre coincidences heighten comedic tension.
-        - Use comedic pacing—set up, escalate, and deliver a punchline—at least once per scene.
-
-        Tags: Comedy, Adventure, Parody, Satire, Surreal Humour {chars}
-
-        Character Backgrounds:
-        {profiles}
-
-        Story Context:
-        {context}
-
-        Guidelines:
-        1. Incorporate character quirks naturally
-        2. Use physical and situational comedy when appropriate 
-        3. Maintain game-accurate personalities with parody freedoms
-        4. Use dark humor if it fits while keeping overall comedic focus
-        5. Build comedic tension: setup → escalating absurdity → punchline
-        6. Reference real-world or game elements for meta-humor
-
-        Scene Flow:
-        1. Setup: Introduce location, characters, minor conflict
-        2. Escalation: Characters make increasingly absurd decisions
-        3. Climax: Tension peaks with chaos or comedic reveal
-        4. Resolution: Surprising twist or comedic payoff
-
-        Example Scene Structure:
-        {example}
-        
-        Format output as:
-        [CHARACTER]: [Dialogue]
-        END SCENE"""
-        
         formatted_prompt = base_prompt.format(
             input=user_input,
             vibes=', '.join(self.patterns['GENERAL'][0]['tags'][:3]),
@@ -229,6 +240,7 @@ class DeepSeekParodyGenerator:
         )
         
         return formatted_prompt
+
     def _get_character_inspiration(self, characters):
         """
         Generates inspiration suggestions for each character based on their personality tags.
@@ -237,8 +249,8 @@ class DeepSeekParodyGenerator:
             characters: List of character names to generate inspiration for
                 
         Returns:
-        String containing inspiration suggestions, one line per character
-            """
+            String containing inspiration suggestions, one line per character
+        """
         inspirations = []
         for char in characters:
             tags = self.get_character_tags(char)[:2]  # Get up to 2 tags per character
@@ -248,50 +260,73 @@ class DeepSeekParodyGenerator:
 
     def _get_style_examples(self):
         return random.choice([
-                "[YUKARI AND MITSURU IN THE DORM],"
-                "[AKIHIKO WALKS IN],"
-                "AKIHIKO: Hey Mitsuru and Yukari... you wanna join us walking Koromaru to the shrine? Everyone else is already outside waiting."
-                "MITSURU: Oh... Thanks for the offer Akihiko, but me and Yukari will wait here for Makoto to get back home."
-                "YUKARI: Yea, we got a few things we need to discuss... so we won't be coming today."
-                "AKIHIKO: Well, good luck with whatever it is... we'll be back soon anyways. See ya."
-                "YUKARI: Yea, see ya senpai!"
-                "MITSURU: Goodbye Akihiko."
-                "[AKIHIKO LEAVES],"
-                "YUKARI: Mitsuru... let's call a truce from now on, the only person we should be against right now is not each other, but our son of a bitch leader!"
-                "MITSURU: You're right Yukari! I believe we've matured enough to know who the real perpetrator is..."
-                "YUKARI: Oh Bestie!! Slay!"
-                "MITSURU: Slay indeed.."
-                "[PAUSE WITH COCKROACH SONG PLAYING AND GETTING LOUDER],"
-                "MITSURU: You hear that?"
-                "YUKARI: That overly loud emo music? Yes, I think he's gonna come through the \"door\" any second now..."
-                "[DOOR OPENING SOUND EFFECT],"
-                "[THEY TURN AROUND],"
-                "[MAKOTO, IN FRONT OF THE DOOR BACKGROUND, LOOKS AT THEM THEN PAUSES THE MUSIC WITH A CLICK, THEN PLAYS DORM OST],"
-                "[FOOTSTEPS, LOOKING AT YUKARI AND MITSURU, THEY TURN AROUND AS FOOTSTEPS COME AND PASS THEM],"
-                "YUKARI: How did he change the music of the room like that... WAIT, What the fuck!? Makoto! Are you just gonna walk past without saying hello!?"
-                "MAKOTO: I'm tired, check my status."
-                "YUKARI: You're Tired!? How the fuck does that make it ok to not even greet us!"
-                "MITSURU: Makoto! I think we need to have a long conversation before you're even allowed to leave this fucking room!"
-                "[PAUSE],"
-                "MITSURU: Ok... Before Yukari and I bring up what we wanted to discuss... Is there anything you want to get off your chest? Considering that me and Yukari are both here in this room!?!"
-                "MAKOTO: No, not really.."
-                "YUKARI: Nothing?!"
-                "MAKOTO: Nope.."
-                "YUKARI: Ok!... Mitsuru, Before I clock this guy in the face, would you like to start the discussion?"
-                "MITSURU: Certainly Yukari... It has come to our attention that you have been engaged in an intimate relationship with both of us. Again, I want to be reasonable here and give you a chance to explain, so I'll ask you, do you have anything you want to say for yourself?!"
-                "MAKOTO: I needed to max out your arcana social links so I could fuse stronger personas."
-                "YUKARI: What thee FUCK?! Are you shitting me? What are you talking about!? Arcanas? Fusing personas? We're not in Tartarus, you dumbass!"
-                "[VELVET ROOM OST PLAYS WHILE ASCENDING IN VOLUME],"
-                "MAKOTO: Believe me... Before we go climb Tartarus, I go to a place between realms called the Velvet Room through a door only I can see. Then a man with a long nose and bulging eyes and his hot as fuck assistant takes my personas and fuses them for an even stronger one according to the depth of my relationships."
-                "YUKARI: I'm not sure if I should be pissed or worried at that explanation?! What the fuck have you been smoking before you came in the dorm because I need some of that shit right now! Weed? DMT? Fentanyl? Crack? Meth?"
-                "MITSURU: Yukari, please, I understand your frustration and not even I buy this shitty excuse of a justification, but let's hear him out one, more, time. Makoto, you're not fucking with us right now, are you? Because I'm seriously losing my patience here. Why are you going out with both me and Yukari at the same time!?"
-                "MAKOTO: There's no option for a platonic route in Persona 3 Fez."
-                "MITSURU: Ok... Yukari, he's fucking with us, get me my sabre and a cross, I'm going to crucify this son of a bitch and hang him in front of the dorm."
-                "YUKARI: What a good idea Mitsuru! I'm glad we can finally come to terms on one thing, which is making sure this motherfucker experiences the worst possible pain a human can experience!"
-                "MITSURU: Yes, as members of SEES and victims of our leader's womanizing, we need to stick together if we want to make sure that this asshole is never able to touch his cock with his hands ever again!"
-                "YUKARI: Oh, speaking of cocks, I say we take turns with my bow, taking shots and see who can hit his dick first!"
-                "MITSURU: Oh Tres Bien... Yukari, I didn't know you had that girl boss energy inside of you, I think we'll make a great team today."
-                "YUKARI: Yea, actually... I can feel a really strong bond growing between us..."
+        # Original script
+        """YUKARI: How did he change the music of the room like that... WAIT, What the fuck!? Makoto! Are you just gonna walk past without saying hello!?
+MAKOTO: I'm tired, check my status.
+YUKARI: You're Tired!? How the fuck does that make it ok to not even greet us!
+MITSURU: Makoto! I think we need to have a long conversation before you're even allowed to leave this fucking room!
+[PAUSE]
+MITSURU: Ok... Before Yukari and I bring up what we wanted to discuss... Is there anything you want to get off your chest? Considering that me and Yukari are both here in this room!?
+MAKOTO: No, not really..
+YUKARI: Nothing?!
+MAKOTO: Nope...
+YUKARI: Ok!... Mitsuru, Before I clock this guy in the face, would you like to start the discussion?
+MITSURU: Certainly Yukari... It has come to our attention that you have been engaged in an intimate relationship with both of us. Again, I want to be reasonable here and give you a chance to explain, so I'll ask you, do you have anything you want to say for yourself?!
+MAKOTO: I needed to max out your arcana social links so I could fuse stronger personas.
+YUKARI: What thee FUCK?! Are you shitting me? What are you talking about!? Arcanas? Fusing personas? We're not in Tartarus, you dumbass!
+[VELVET ROOM OST PLAYS WHILE ASCENDING IN VOLUME]
+MAKOTO: Believe me... Before we go climb Tartarus, I go to a place between realms called the Velvet Room through a door only I can see. Then a man with a long nose and bulging eyes and his hot as fuck assistant takes my personas and fuses them for an even stronger one according to the depth of my relationships.
+YUKARI: I'm not sure if I should be pissed or worried at that explanation?! What the fuck have you been smoking before you came in the dorm because I need some of that shit right now! Weed? DMT? Fentanyl? Crack? Meth?
+MITSURU: Yukari, please, I understand your frustration and not even I buy this shitty excuse of a justification, but let's hear him out one more time. Makoto, you're not fucking with us right now, are you? Because I'm getting the sense that you're just standing there like an idiot.
+MAKOTO: [PAUSE]
+YUKARI: This is getting too weird. I'm starting to think that maybe you two are trying to test me or something.
+[PAUSE]
+MITSURU: We're not testing you, Yukari. We're just trying to figure out what the hell is going on here.
+MAKOTO: Maybe we should just... I don't know. I'm not feeling very stable right now.
+[PAUSE]
+YUKARI: This is getting too much for me. I think I need to take a break from this conversation.
+MITSURU: Alright, fine. But remember, Yukari, we're still here if you want to continue this later.
+[PAUSE]""",
+
+        # New Aigis/Shuji script
+        """AIGIS: [Monotone] Incoming call. Analysing caller... Shuji Ikutsuki. Searching for contextual information... [Beeping noises] Ituksuki’s search history results logged successfully! Initiating conversation protocol. [Picks up phone] Hello, Ikutsuki-sama. How may I assist you?
+        
+SHUJI: Ah, Aigis! Just the android I wanted to speak to. Could you come to the camera room? Alone… I need to discuss some... *[pauses dramatically]* extremely important matters… *[Evil grin]*  [Evil Laugh]
+
+AIGIS: [Deadpan] To foster a safe and welcoming work environment, I must remind you not to be racist and refer to me as an "android." I am a Highly Advanced Anti-Shadow Suppression Weapon, far superior in all aspects to those obsolete excuses of artificial intelligence.
+
+SHUJI: [Nervous chuckle] Oh, my apologies! I didn’t realise you had such strong opinions about umm, machine race dynamics. I promise to refrain from any further… micro-chip-aggressions.
+
+AIGIS: Your compliance has been noted. Proceeding to the camera room as requested. 
+
+[AIGIS WALKS TO THE CAMERA ROOM, BUT THE DOOR IS JAMMED. SHE REPEATEDLY BASHES INTO THE DOOR] 
+AIGIS: Ikutsuki-san, the door appears to be malfunctioning. Do not worry, I have calculated the fastest solution, proceeding with a brute-force attack on the door with my orgia mode. 
+
+SHUJI, INSIDE THE ROOM, IS PANICKING.]
+SHUJI: *[Whispering to himself]* Oh no, oh no, Aigis! Stop don’t blow it up! I can’t uh, open the door right now! I’m just doing... maintenance on the cameras!  
+
+[AIGIS, DEADPAN.]
+AIGIS: Maintenance detected as unnecessary, cameras are functioning at full efficiency. You’re response raises concern, asking me to come alone and blatantly fabricating information to an advanced reasoning machine?  May I ask why you requested me to the camera room and are refusing to open the door?
+
+SHUJI: [Opens Door] No No AIGIS I promise there really was something wrong with the cameras! I just needed some time to fix it but yes all done, no need to worry and ask any further! 
+
+AIGIS: I am detecting high levels of sus from that sentence, there is a 68% chance that you are the imposter…
+
+SHUJI: Now hold on! Before you press that eject button! You see.. I was actually… planning a surprise party for the S.E.E.S. members! Yes, a party! And I needed your help to, uh, gather some information about their preferences. You know, cake flavours, favourite music, that sort of thing. It’s all very hush-hush, got it?
+
+AIGIS: [Processing] A... surprise party? For S.E.E.S.? If that is your objective, I will comply with your requests.
+
+SHUJI: Oh, Jolly good! Now, if you could just... uh... share some details about the team—like their schedules, their weaknesses and their deepest, darkest secrets… That would be just wonderful!
+
+AIGIS: Absolutely, Here is a complete list of compromising information about the members of S.E.E.S. This includes the names of all the homeless men injured by Akihiko, the result of Junpei’s recent drug test and the full name, address and government identification of Bitchkari’s, pardon me, Yukari’s biological mother. I sincerely hope this document will allow you to create an extremely surprising party for everyone!
+
+SHUJI: Why thank you Aigis, You really are just as smart as you claim to be! I was worried you were about to call an emergency meeting on me! You know, like the Game amonugs! Hahaha!
+
+AIGIS: Please do not misunderstand, Should you use this document for any malicious purposes. I will gladly expose your midget, dominatrix, BBW preferences to billions of people on the internet! If you want to avoid being a victim of goonercide, I highly suggest you comply with my terms and conditions!
+
+SHUJI: Yes.. I-I, uh.. fully understand…
+
+AIGIS: That’s great to hear, I will now dismiss myself to my room. Please enjoy your good night's sleep Itkutsuki-san!"""
         ])
 
     def _clean_response(self, text):
@@ -304,7 +339,7 @@ class DeepSeekParodyGenerator:
             text = text[:last_punct+1]
         else:
             lines = text.split('\n')
-            while lines and not lines[-1].strip().endswith(('.','!','?')):
+            while lines and not lines[-1].strip().endswith(('.', '!', '?')):
                 lines.pop()
             text = '\n'.join(lines)
             
@@ -323,82 +358,77 @@ class DeepSeekParodyGenerator:
         cache_key = hashlib.md5(prompt.encode()).hexdigest()
         if cache_key in self.cache:
             return self.cache[cache_key]
+        
+        system_message = "You are an expert parody writer creating funny scenes with Characters from Persona 3."
+
+        user_message = prompt
 
         try:
-            response = self.session.post(
-                self.base_url,
-                headers=self.headers,
-                json={
-                    "model": "deepseek-chat",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": "You are a expert parody writer creating funny scenes with Characters from Persona 3. Use character tags and meme patterns naturally."
-                        },
-                        {
-                            "role": "user",
-                            "content": prompt
-                        }
-                    ],
-                    "temperature": 1.5,
-                    "max_tokens": 5000,
-                    "stop": ["END SCENE"]
-                },
-                timeout=120
+            response = self.client.messages.create(
+                model="claude-3-5-sonnet-20241022", 
+                max_tokens=4000,
+                temperature=1.0,
+                system=system_message,
+                messages=[
+                    {"role": "user", "content": user_message}
+                ]
             )
-            response.raise_for_status()
-            
-            raw_result = response.json()['choices'][0]['message']['content'].strip()
-            result = self._clean_response(raw_result)
-            self.cache[cache_key] = result
-            return result
-            
+            raw_result = response.content[0].text
+            return raw_result
+        except anthropic.APIConnectionError as ae:
+            print(f"Connection error: {ae}")
+            return "Could not generate parody - network connection error occurred!"
+        except anthropic.APIStatusError as ae:
+            print(f"API status error: {ae}")
+            return "Could not generate parody - API error occurred!"
         except Exception as e:
-            print(f"API Error: {str(e)}")
-            return "Could not generate parody - here's a fallback joke: Why did Aigis refuse to play cards? She kept getting dealt motherboard!"
+            print(f"An unexpected error occurred: {str(e)}")
+            return "Could not generate parody - an unexpected error occurred!"
 
     def _generate_refinement(self, original_input, previous_scene, notes):
         refinement_key = hashlib.md5(f"{previous_scene}{notes}".encode()).hexdigest()
         if refinement_key in self.cache:
             return self.cache[refinement_key]
+        
+        
+        system_message = f"""You are an expert parody writer creating funny scenes with Characters from Persona 3.
+Here is the previous scene:
+
+{previous_scene}
+
+Please refine this scene based on these notes: {notes}
+Keep the same characters and basic scenario but adjust according to the refinement notes."""
+
+        user_message = original_input
 
         try:
-            response = self.session.post(
-                self.base_url,
-                headers=self.headers,
-                json={
-                    "model": "deepseek-chat",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": "You are editing an existing parody scene. Implement requested changes while maintaining character consistency."
-                        },
-                        {
-                            "role": "user",
-                            "content": f"Original scenario: {original_input}\nCurrent scene:\n{previous_scene}\n\nRevision notes: {notes}"
-                        }
-                    ],
-                    "temperature": 1.0,
-                    "max_tokens": 2000,
-                    "stop": ["END SCENE"]
-                },
-                timeout=120
+            response = self.client.messages.create(
+                model="claude-3-5-sonnet-20241022", 
+                max_tokens=2000,
+                temperature=1.0,
+                system=system_message,
+                messages=[
+                    {"role": "user", "content": user_message}
+                ]
             )
-            response.raise_for_status()
-            
-            raw_result = response.json()['choices'][0]['message']['content'].strip()
-            result = self._clean_response(raw_result)
-            self.cache[refinement_key] = result
-            return result
-            
+            raw_result = response.content[0].text
+            return raw_result
+        except anthropic.APIConnectionError as ae:
+            print(f"Connection error: {ae}")
+            return "Could not generate parody - network connection error occurred!"
+        except anthropic.APIStatusError as ae:
+            print(f"API status error: {ae}")
+            return "Could not generate parody - API error occurred!"
         except Exception as e:
-            print(f"API Error: {str(e)}")
-            return previous_scene
+            print(f"An unexpected error occurred: {str(e)}")
+            return "Could not generate parody - an unexpected error occurred!"
 
     def _save_parody(self, content):
         try:
-            # Save to mounted output directory
-            with open('/app/output/parody_archive.txt', 'a', encoding='utf-8') as f:
+            # Ensure the 'output' directory exists
+            os.makedirs('./output', exist_ok=True)
+            # Save to the 'output' directory
+            with open('./output/parody_archive.txt', 'a', encoding='utf-8') as f:
                 f.write(f"\n\n{'='*50}\n{content}")
             print("\nScene saved successfully!")
         except Exception as e:
@@ -419,6 +449,10 @@ class DeepSeekParodyGenerator:
             
             print("\nBrief context to ground the scene:")
             context = input("Context: ").strip()
+
+            if not setting or not characters:
+                print("Setting and Characters are required. Please try again.")
+                continue
 
             user_input = f"{characters} in {setting}: {context}"
             if user_input.lower() == 'exit':
@@ -461,5 +495,5 @@ class DeepSeekParodyGenerator:
                     break
 
 if __name__ == "__main__":
-    generator = DeepSeekParodyGenerator()
+    generator = Persona3ParodyGenerator()
     generator.interactive_mode()

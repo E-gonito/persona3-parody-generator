@@ -1,6 +1,6 @@
 # PERSONA 3 PARODY GENERATOR CUSTOMIZATION GUIDE
 
-A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses DeepSeek API for content generation.
+A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses Claude API for content generation.
 
 ## Prerequisites
 
@@ -22,37 +22,7 @@ DEEPSEEK_API_KEY=your_api_key_here
 **Location:** `def __init__(self):`
 
 ```python
-self.api_key = os.getenv('DEEPSEEK_API_KEY')  # Replace with your API key (Never hardcode)
-```
-
-## Configuration Examples
-
-### Strict Adherence
-
-```python
-# Configurable parameters
-self.pattern_strictness = 0.9  # Range: 0.0 (creative) to 1.0 (strict)
-self.tag_weight = 2.0         # Range: 0.1 to 3.0
-self.max_tags = 4            # Range: 1 to 5
-self.use_examples = True     # Options: True/False
-```
-
-### Creative Mode
-
-```python
-self.pattern_strictness = 0.3
-self.tag_weight = 1.2
-self.max_tags = 2
-self.use_examples = False
-```
-
-### Balanced Default
-
-```python
-self.pattern_strictness = 0.7
-self.tag_weight = 1.5
-self.max_tags = 3
-self.use_examples = True
+self.api_key = os.getenv('API_KEY')  # Replace with your API key (Never hardcode)
 ```
 
 ## Quick Start With Docker
@@ -104,3 +74,5 @@ The results will be saved to `parody_archive.txt`, to copy over-
 # Copy results from container
 docker cp <container-name>:/app/parody_archive.txt ./output/
 ```
+
+pip install bitsandbytes
