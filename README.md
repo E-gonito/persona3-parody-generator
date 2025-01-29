@@ -1,11 +1,10 @@
-# PERSONA 3 PARODY GENERATOR CUSTOMIZATION GUIDE
+# PERSONA 3 PARODY GENERATOR
 
 A parody script generator for Persona 3 Parodies (specifically in the style of MasterDank47) built with Python. Uses Claude API for content generation.
 
 ## Prerequisites
 
-- Docker installed on your system
-- Docker Compose (recommended)
+- Docker [https://github.com/docker]
 
 ## Local Environment Setup
 
